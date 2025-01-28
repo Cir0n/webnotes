@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "Cir0n", email = ""},
 ]
-dependencies = ["mysql-connector-python>=9.2.0", "flask>=3.1.0"]
+dependencies = ["mysql-connector-python>=9.2.0", "flask>=3.1.0", "python-dotenv>=1.0.1"]
 requires-python = "==3.12.*"
 readme = "README.md"
 license = {text = "MIT"}
