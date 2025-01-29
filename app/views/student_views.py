@@ -8,19 +8,19 @@ class StudentViews:
         self.register_routes()
 
     def register_routes(self):
-        @self.student_bp.route('/students/<int:student_id>')
+        @self.student_bp.route('/<int:student_id>')
         def student_details(student_id):
             student = self.controller.get_student(student_id)
             if "error" in student:
                 return render_template('error.html') 
             return render_template('student/dashboard.html', student=student)
         
-        @self.student_bp.route('/students')
+        @self.student_bp.route('/list')
         def list_students():
             students = self.controller.list_students()
             return render_template('student/list.html', students=students)
         
-        @self.student_bp.route('/students/add', methods=['GET', 'POST'])
+        @self.student_bp.route('/add', methods=['GET', 'POST'])
         def add_student():
             data = request.form
             self.controller.create_student(

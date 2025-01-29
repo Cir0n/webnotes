@@ -19,7 +19,7 @@ class StudentController:
         if self.user_model.get_user_by_username(username):
             return ("ERROR: Username already exists")
         
-        #TODO: Hasher le mots de passe et le mttre dans la base de données et ajouter les détails du user
-        self.model.create_student(first_name, last_name, student_class)
+        user_id = self.user_model.add_user(username, password, role='student')
+        self.model.create_student(user_id, first_name, last_name, student_class)
         return ("Success: Student created successfully")
     
