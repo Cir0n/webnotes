@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, session
+
 from app.controllers.teacher_controller import TeacherController
 
-class TeacherView:
+class TeacherViews:
     def __init__(self):
         self.teacher_bp = Blueprint("teacher_bp", __name__)
         self.controller = TeacherController()
