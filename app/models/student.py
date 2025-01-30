@@ -17,3 +17,8 @@ class StudentModel:
     def create_student(self, user_id, first_name, last_name, student_class):
         query = "INSERT INTO students ( id, first_name, last_name, class) VALUES (%s, %s, %s, %s)"
         self.db.execute(query, (user_id, first_name, last_name, student_class))
+
+    def delete_student(self, student_id):
+        query = "DELETE FROM students WHERE id = %s"
+        self.db.execute(query, (student_id,))
+

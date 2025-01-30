@@ -24,3 +24,7 @@ class StudentController:
             user_id, first_name, last_name, student_class
         )
         return "Success: Student created successfully"
+
+    def delete_student(self, student_id):
+        self.model.delete_student(student_id)
+

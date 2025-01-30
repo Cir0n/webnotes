@@ -1,0 +1,36 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Ajouter un Professeur</h2>
+
+    <form action="{{ url_for('admin_bp.add_teacher') }}" method="POST">
+        <div class="mb-3">
+            <label for="username" class="form-label">Nom d'utilisateur :</label>
+            <input type="text" name="username" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe :</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="first_name" class="form-label">Prénom :</label>
+            <input type="text" name="first_name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="last_name" class="form-label">Nom :</label>
+            <input type="text" name="last_name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="matiere" class="form-label">matiere :</label>
+            <input type="text" name="matiere" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
+{% endblock %}

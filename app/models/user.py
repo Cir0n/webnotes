@@ -26,3 +26,6 @@ class UserModel:
         if user and bcrypt.check_password_hash(user["password"], password):
             return True
         return False
+    
+    def add_admin(self, username, password):
+        return self.add_user(username, password, role="admin")

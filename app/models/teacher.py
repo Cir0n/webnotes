@@ -17,3 +17,8 @@ class TeacherModel:
     def create_teacher(self, user_id, first_name, last_name, matiere):
         query = "INSERT INTO teachers ( id, first_name, last_name, matiere) VALUES (%s, %s, %s, %s)"
         self.db.execute(query, (user_id, first_name, last_name, matiere))
+
+    def delete_teacher(self, teacher_id):
+        query = "DELETE FROM teachers WHERE id = %s"
+        self.db.execute(query, (teacher_id,))
+    

@@ -20,3 +20,8 @@ class TeacherController:
         user_id = self.user_model.add_user(username, password, role="teacher")
         self.model.create_teacher(user_id, first_name, last_name, matiere)
         return "Success: Teacher created successfully"
+    
+    def delete_teacher(self, teacher_id):
+        self.model.delete_teacher(teacher_id)
+
+    

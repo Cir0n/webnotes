@@ -33,6 +33,8 @@ class AuthViews:
                     return redirect(url_for("student_bp.student_details"))
                 if result["role"] == "teacher":
                     return redirect(url_for("teacher_bp.teacher_details")) #FIXME: teacher_bp is not defined mais marche pour student
+                if result["role"] == "admin":
+                    return redirect(url_for("admin_bp.admin_dashboard"))
             
                 return redirect("/profile")
             return render_template("auth/login.html")
