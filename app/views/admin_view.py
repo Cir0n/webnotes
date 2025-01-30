@@ -70,20 +70,22 @@ class AdminViews:
         def add_teacher():                          #TODO: lors de la création ajouter dans teacher_class la classe de l'enseignant et ajouter dans teacher_subject la matière de l'enseignant
             self.require_admin()
             subjects = self.subject_controller.get_all_subjects()
+            classes = self.class_controller.get_all_classes()
             
             if request.method == "POST":
                 username = request.form.get("username")
                 password = request.form.get("password")
                 first_name = request.form.get("first_name")
                 last_name = request.form.get("last_name")
-                matiere = request.form.get("matiere")
+                selected_classes = request.form.getlist("classes")
+                selected_subjects = request.form.getlist("subjects")
                 result = self.teacher_controller.create_teacher(
-                    username, password, first_name, last_name, matiere
+                    username, password, first_name, last_name, selected_classes, selected_subjects
                 )
                 flash(result)
                 return redirect(url_for("admin_bp.list_teachers"))
             
-            return render_template("admin/add_teacher.html")
+            return render_template("admin/add_teacher.html", subjects=subjects, classes=classes)
         
         @self.admin_bp.route("/delete_teacher/<teacher_id>", methods=["POST"])
         def delete_teacher(teacher_id):

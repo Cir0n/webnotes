@@ -15,10 +15,10 @@ class TeacherController:
     def list_teachers(self):
         return self.model.get_all_teachers()
     
-    def create_teacher(self, username, password, first_name, last_name, matiere):
+    def create_teacher(self, username, password, first_name, last_name, class_ids, subject_ids):
         
         user_id = self.user_model.add_user(username, password, role="teacher")
-        self.model.create_teacher(user_id, first_name, last_name, matiere)
+        self.model.create_teacher(user_id, first_name, last_name, class_ids, subject_ids)
         return "Success: Teacher created successfully"
     
     def delete_teacher(self, teacher_id):
