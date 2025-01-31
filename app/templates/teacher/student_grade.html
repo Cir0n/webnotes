@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Notes de l'Élève</h2>
+<ul>
+    {% for grade in grades %}
+        <li>
+            {{ grade.subject_name }} : <strong>{{ grade.grade }}</strong> ({{ grade.comment }}) - {{ grade.date_added }}
+        </li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('teacher_dashboard') }}">🔙 Retour</a>
+{% endblock %}

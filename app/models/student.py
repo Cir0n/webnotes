@@ -42,6 +42,14 @@ class StudentModel:
         
         return user_id
 
+    def get_student_classes(self, class_id):
+        query = """
+        SELECT id, first_name, last_name
+        From students
+        WHERE class_id = %s
+        """
+        return self.db.query(query, (class_id,))
+
     def delete_student(self, student_id):
         query = "DELETE FROM users WHERE id = %s"
         self.db.execute(query, (student_id,))
