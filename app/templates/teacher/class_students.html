@@ -1,0 +1,37 @@
+{% extends "teacher/base.html" %}
+
+{% block content %}
+<h2>📖 Étudiants de la Classe</h2>
+
+<ul>
+    {% for student in students %}
+        <li>
+            {{ student.first_name }} {{ student.last_name }}
+            <a href="{{ url_for('teacher_bp.student_grades', student_id=student.id) }}">📄 Voir Notes</a>
+
+            <form action="{{ url_for('teacher_bp.add_grade') }}" method="POST">
+                <input type="hidden" name="student_id" value="{{ student.id }}">
+                <input type="hidden" name="class_id" value="{{ class_id }}">
+                
+                <label for="subject_id">Matière :</label>
+                <select name="subject_id">
+                    <option value="1">Mathématiques</option>
+                    <option value="2">Français</option>
+                    <!-- Remplace ces valeurs par une liste dynamique des matières enseignées -->
+                </select>
+
+                <label for="grade">Note :</label>
+                <input type="number" name="grade" min="0" max="20" step="0.5" required>
+
+                <label for="comment">Commentaire :</label>
+                <input type="text" name="comment">
+
+                <button type="submit">➕ Ajouter Note</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('teacher_bp.teacher_dashboard') }}">🔙 Retour</a>
+
+{% endblock %}

@@ -1,12 +1,19 @@
-{% extends "base.html" %}
+{% extends "teacher/base.html" %}
+
 {% block content %}
-<h2>Notes de l'Élève</h2>
+<h2>📝 Notes de l'Élève</h2>
+
 <ul>
     {% for grade in grades %}
         <li>
-            {{ grade.subject_name }} : <strong>{{ grade.grade }}</strong> ({{ grade.comment }}) - {{ grade.date_added }}
+            📌 <strong>{{ grade.subject_name }}</strong> : 
+            <span style="font-weight: bold;">{{ grade.grade }}/20</span>
+            <br> 🗒 Commentaire : {{ grade.comment }}
+            <br> 📅 Ajoutée le : {{ grade.date_added }}
         </li>
     {% endfor %}
 </ul>
-<a href="{{ url_for('teacher_dashboard') }}">🔙 Retour</a>
+
+<a href="{{ url_for('teacher.class_students', class_id=class_id) }}">🔙 Retour</a>
+
 {% endblock %}

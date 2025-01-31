@@ -11,7 +11,7 @@ class StudentViews:
 
     def register_routes(self):
         @self.student_bp.route("/me")
-        def student_details():
+        def student_dashboard():
             student_id = session.get("user_id")
             student = self.controller.get_student(student_id)
             if "error" in student:

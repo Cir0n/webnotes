@@ -36,3 +36,6 @@ class TeacherController:
 
     def get_student_classes(self, class_id):
         return self.student_model.get_student_classes(class_id)
+    
+    def get_teacher_classes(self, teacher_id):
+        return self.teacher_model.get_teacher_classes(teacher_id)
