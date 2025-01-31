@@ -32,26 +32,34 @@ class AdminViews:
         def list_students():
             self.require_admin()
             students = self.student_controller.list_students()
-            return render_template("admin/students.html", students=students)
+            options = self.subject_controller.get_options() 
+            languages = self.subject_controller.get_languages() 
+            return render_template("admin/students.html", students=students, options=[o['name'] for o in options], languages=[l['name'] for l in languages])
+
         
         @self.admin_bp.route("/add_student", methods=["GET", "POST"])
         def add_student():
             self.require_admin()
             classes = self.class_controller.get_all_classes()
+            languages = self.subject_controller.get_languages()
+            options = self.subject_controller.get_options()
 
             if request.method == "POST":
                 username = request.form.get("username")
                 password = request.form.get("password")
                 first_name = request.form.get("first_name")
                 last_name = request.form.get("last_name")
-                student_class = request.form.get("student_class")
+                class_id = request.form.get("class")
+                selected_languages = request.form.getlist("languages")
+                selected_options = request.form.getlist("options")
+
                 result = self.student_controller.create_student(
-                    username, password, first_name, last_name, student_class
+                    username, password, first_name, last_name, class_id, selected_languages, selected_options
                 )
-                flash(result)
+                flash("etudiant ajouter avec succès")
                 return redirect(url_for("admin_bp.list_students"))
             
-            return render_template("admin/add_student.html", classes=classes)
+            return render_template("admin/add_student.html", classes=classes, languages=languages, options=options)
 
         @self.admin_bp.route("/delete_student/<student_id>", methods=["POST"])
         def delete_student(student_id):
@@ -59,6 +67,8 @@ class AdminViews:
             result = self.student_controller.delete_student(student_id)
             flash("Etudiant supprimé avec succès")
             return redirect(url_for("admin_bp.list_students"))
+        
+        #----------------------------TEACHERS--------------------------------
 
         @self.admin_bp.route("/teachers")
         def list_teachers():
@@ -67,7 +77,7 @@ class AdminViews:
             return render_template("admin/teachers.html", teachers=teachers)
         
         @self.admin_bp.route("/add_teacher", methods=["GET", "POST"])
-        def add_teacher():                          #TODO: lors de la création ajouter dans teacher_class la classe de l'enseignant et ajouter dans teacher_subject la matière de l'enseignant
+        def add_teacher():
             self.require_admin()
             subjects = self.subject_controller.get_all_subjects()
             classes = self.class_controller.get_all_classes()

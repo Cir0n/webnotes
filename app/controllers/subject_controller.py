@@ -7,3 +7,9 @@ class SubjectController:
     def get_all_subjects(self):
         return self.model.get_all_subjects()
     
+    def get_languages(self):
+        return self.model.get_languages()
+    
+    def get_options(self):
+        return self.model.get_options()
+    
