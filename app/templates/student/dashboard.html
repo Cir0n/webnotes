@@ -13,7 +13,9 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ student.first_name }} {{ student.last_name }}</h5>
-                    <p class="card-text"><strong>Class:</strong> {{ student.class }}</p>
+                    {% for class in class_ %}
+                        <p class="card-text"><strong>Classe : {{ class.name }}</strong></p>
+                    {% endfor %}
                 </div>
             </div>
         {% else %}

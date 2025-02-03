@@ -11,4 +11,7 @@ class ClassController:
         self.class_model.add_class(name)
         return {"success": "Class added successfully"}
     
+    def get_one_class(self, class_id):
+        return self.class_model.get_one_class(class_id)
+    
     

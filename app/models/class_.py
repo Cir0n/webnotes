@@ -12,3 +12,7 @@ class ClassModel:
         sql = "SELECT * FROM class"
         return self.db.query(sql)
     
+    def get_one_class(self, class_id):
+        sql = "SELECT * FROM class WHERE id = %s"
+        return self.db.query(sql, (class_id,))
+    
