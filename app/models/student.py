@@ -21,6 +21,32 @@ class StudentModel:
         GROUP BY s.id, s.first_name, s.last_name, c.name
         """
         return self.db.query(sql)
+    
+    def edit_student(self, student_id, first_name, last_name, class_id, selected_languages, selected_options):
+        query = """
+            UPDATE students 
+            SET first_name = %s, last_name = %s, class_id = %s
+            WHERE id = %s
+        """
+        self.db.execute(query, (first_name, last_name, class_id, student_id))
+
+        query_delete = "DELETE FROM student_subject WHERE student_id = %s"
+        self.db.execute(query_delete, (student_id,))
+
+        sql_principal_subject = "SELECT id FROM subjects WHERE type = 'Principal'"
+        principal_subjects = self.db.query(sql_principal_subject)
+
+        for subject in principal_subjects:
+            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+            self.db.execute(query, (student_id, subject['id']))
+
+        for language in selected_languages:
+            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+            self.db.execute(query, (student_id, language))
+
+        for option in selected_options:
+            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+            self.db.execute(query, (student_id, option))
 
     def create_student(self, user_id, first_name, last_name, class_id, selected_languages, selected_options):
         query = "INSERT INTO students ( id, first_name, last_name, class_id) VALUES (%s, %s, %s, %s)"

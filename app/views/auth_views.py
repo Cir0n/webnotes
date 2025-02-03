@@ -30,7 +30,7 @@ class AuthViews:
                         "auth/login.html", message=result["error"]
                     )
                 if result["role"] == "student":
-                    return redirect(url_for("student_bp.student_details"))
+                    return redirect(url_for("student_bp.student_dashboard"))
                 if result["role"] == "teacher":
                     return redirect(url_for("teacher_bp.teacher_dashboard")) #FIXME: teacher_bp is not defined mais marche pour student
                 if result["role"] == "admin":
