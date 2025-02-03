@@ -23,6 +23,9 @@
                 <td>{{ teacher.classes if teacher.classes else "Aucune classe assignée" }}</td>
                 <td>{{ teacher.subjects if teacher.subjects else "Aucune matière assignée" }}</td>
                 <td>
+                    <!-- Bouton Modifier -->
+                    <a href="{{ url_for('admin_bp.edit_teacher', teacher_id=teacher.id) }}" class="btn btn-warning btn-sm">Modifier</a>
+
                     <form action="{{ url_for('admin_bp.delete_teacher', teacher_id=teacher.id) }}" method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
                     </form>
