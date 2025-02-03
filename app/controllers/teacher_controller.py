@@ -39,3 +39,9 @@ class TeacherController:
     
     def get_teacher_classes(self, teacher_id):
         return self.teacher_model.get_teacher_classes(teacher_id)
+    
+    def get_teacher_subjects(self, teacher_id):
+        return self.teacher_model.get_teacher_by_subject(teacher_id)
+
+    def delete_grade(self, teacher_id, grade_id):
+        return self.grade_model.delete_grade(teacher_id, grade_id)

@@ -7,7 +7,7 @@ class StudentController:
         self.model = StudentModel()
         self.user_model = UserModel()
 
-    def get_student(self, student_id):
+    def get_student_info(self, student_id):
         student = self.model.get_student_by_id(student_id)
         if not student:
             return "ERROR: Student not found"

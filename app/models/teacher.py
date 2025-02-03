@@ -51,3 +51,12 @@ class TeacherModel:
         WHERE tc.teacher_id = %s
         """
         return self.db.query(query, (teacher_id,))
+    
+    def get_teacher_by_subject(self, teacher_id):
+        query = """
+        SELECT s.id, s.name
+        FROM subjects s
+        JOIN teacher_subject ts ON s.id = ts.subject_id
+        WHERE ts.teacher_id = %s
+        """
+        return self.db.query(query, (teacher_id,))
