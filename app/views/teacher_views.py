@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, request, flash
+from flask import Blueprint, render_template, session, request, flash, redirect, url_for
 
 from app.controllers.teacher_controller import TeacherController
 from app.decorators import require_teacher
@@ -25,7 +25,7 @@ class TeacherViews:
             return render_template("teacher/dashboard.html", classes=classes)
         
         @self.teacher_bp.route("/class/<int:class_id>")
-        def class_students(self, class_id):
+        def class_students(class_id):
             teacher_id = session.get("user_id")
             students = self.controller.get_student_classes(class_id)
             return render_template("teacher/class_students.html", students=students, class_id=class_id)
@@ -39,12 +39,23 @@ class TeacherViews:
             grade = request.form["grade"]
             comment = request.form["comment"]
 
-            self.controller.add_grade(teacher_id, student_id, subject_id, grade, comment)
+            try:
+                self.controller.add_grade(teacher_id, student_id, subject_id, grade, comment)
+                flash("Grade added successfully")
+            except ValueError as e:
+                flash(str(e))
+
+            return redirect(url_for("teacher_bp.teacher_dashboard"))
 
         @self.teacher_bp.route("/student/<int:student_id>")
         def student_grades(student_id):
             teacher_id = session.get("user_id")
+            class_id = request.args.get("class_id")  # Ensure class_id is passed as a query parameter
+            if not class_id:
+                # Handle the case where class_id is not provided
+                flash("Class ID is required")
+                return redirect(url_for("teacher_bp.teacher_dashboard"))
             grades = self.controller.get_student_grades(teacher_id, student_id)
-            return render_template("teacher/student_grades.html", grades=grades)
+            return render_template("teacher/student_grades.html", grades=grades, class_id=class_id)
 
-        
+
