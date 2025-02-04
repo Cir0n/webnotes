@@ -70,3 +70,12 @@ class StudentModel:
     def delete_student(self, student_id):
         query = "DELETE FROM users WHERE id = %s"
         self.db.execute(query, (student_id,))
+
+    def get_student_subject(self, student_id):
+        query = """
+        SELECT s.id, s.name, s.type
+        FROM subjects s
+        JOIN student_subject ss ON s.id = ss.subject_id
+        WHERE ss.student_id = %s
+        """
+        return self.db.query(query, (student_id,))

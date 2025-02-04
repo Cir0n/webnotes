@@ -1,4 +1,5 @@
 from app.models.student import StudentModel
+from app.models.grade import GradeModel
 from app.models.user import UserModel
 
 
@@ -6,6 +7,7 @@ class StudentController:
     def __init__(self):
         self.model = StudentModel()
         self.user_model = UserModel()
+        self.grade_model = GradeModel()
 
     def get_student_info(self, student_id):
         student = self.model.get_student_by_id(student_id)
@@ -40,3 +42,11 @@ class StudentController:
 
     def delete_student(self, student_id):
         self.model.delete_student(student_id)
+
+    def get_student_grades(self, student_id):
+        grades = self.grade_model.get_student_grade_by_student(student_id)
+        return grades if grades else []
+    
+    def get_student_subject(self, student_id):
+        subjects = self.model.get_student_subject(student_id)
+        return subjects if subjects else []
