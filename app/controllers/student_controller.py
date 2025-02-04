@@ -17,14 +17,26 @@ class StudentController:
         return self.model.get_all_students()
 
     def create_student(
-        self, username, password, first_name, last_name, class_id, selected_languages, selected_options):
+        self,
+        username,
+        password,
+        first_name,
+        last_name,
+        class_id,
+        selected_languages,
+        selected_options,
+    ):
 
         user_id = self.user_model.add_user(username, password, role="student")
         self.model.create_student(
-            user_id, first_name, last_name, class_id, selected_languages, selected_options
+            user_id,
+            first_name,
+            last_name,
+            class_id,
+            selected_languages,
+            selected_options,
         )
         return "Success: Student created successfully"
 
     def delete_student(self, student_id):
         self.model.delete_student(student_id)
-

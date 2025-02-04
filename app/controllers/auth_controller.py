@@ -16,11 +16,11 @@ class AuthController:
         if user and self.user_model.check_password(username, password):
             session["user_id"] = user["id"]
             session["role"] = user["role"]
-            
+
             if user["role"] == "admin":
                 return {"success": "Login successful", "role": user["role"]}
-            
-            return {"success": "Login successful", "role": user["role"]} 
+
+            return {"success": "Login successful", "role": user["role"]}
         return {"error": "Invalid username or password"}
 
     def logout(self):
