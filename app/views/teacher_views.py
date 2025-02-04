@@ -49,8 +49,8 @@ class TeacherViews:
             )
 
         @self.teacher_bp.route("/add_grade", methods=["POST"])
-        def add_grade():
-            teacher_id = session.get("user_id")
+        def add_grade():                                        #TODO: ajouter un coef pour chaque matière
+            teacher_id = session.get("user_id")     
             student_id = request.form["student_id"]
             subject_id = request.form["subject_id"]
             grade = request.form["grade"]
