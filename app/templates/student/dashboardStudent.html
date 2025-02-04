@@ -3,94 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/styles.css">
-    <script src="/app/static/js/main.js"></script>
-    <title>Notes des élèves</title>
+    <title>Dashboard Étudiant</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student/style.css') }}">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-logo">Espace Elève</div>
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-        <div class="navbar-menu">
-            <a href="#">Emploi du temps</a>
-            <a href="#">Devoirs</a>
-            <a href="#">Mails</a>
-            <a href="/app/templates/student/notes.html">Notes</a>
-            <a href="#">Présence</a>
-        </div>
-        <button class="navbar-btn">Déconnexion</button>
-    </nav>
-    {% if student %}
-    <h1 id="big-text-title">Bonjour, {{ student.first_name }} {{ student.last_name }}</h1>
-    {% endif %}
-    {% for class in class_ %}
-    <h2 id="medium-text">Classe : {{ class.name }}</h2>
-    {% endfor %}
-    <div class="container">
-        <div class="schedule">
-            <h1 id="big-text">Emploi du Temps</h1>
-            <h3 id="actual-day">Lundi</h3>
-            <div class="card">
-                <div class="course-title">Mathématiques</div>
-                <div class="course-time">08:00 - 10:00</div>
-            </div>
-            <div class="card">
-                <div class="course-title">Histoire-Géographie</div>
-                <div class="course-time">10:00 - 11:00</div>
-            </div>
-            <div class="card">
-                <div class="course-title">Anglais</div>
-                <div class="course-time">11:00 - 12:00</div>
-            </div>
-            <div class="card">
-                <div class="course-title">Sciences de la Vie et de la Terre (SVT)</div>
-                <div class="course-time">13:00 - 15:00</div>
-            </div>
-            <div class="card">
-                <div class="course-title">Éducation Physique et Sportive (EPS)</div>
-                <div class="course-time">15:00 - 17:00</div>
-            </div>
-        </div>
-        <div class="right">
-            <div class="retard">
-                <h2 id="medium-text">Retards</h2>
-                <div class="colonne">
-                    <div class="card">
-                        <p>Nombre de retards : 3</p>
+    {% include 'partials/_navbar.html' %}
+    
+    <!-- Main Content -->
+    <div class="container-fluid py-4">
+        {% if student %}
+        <h2 class="mb-4 welcome-text">Bienvenue, {{ student.first_name }} {{ student.last_name }}</h2>
+        {% endif %}
+        {% for class in class_ %}
+        <p class="text-muted">Classe : {{ class.name }}</p>
+        {% endfor %}
+
+        <div class="row">
+            <!-- Emploi du temps -->
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header schedule-header text-white">
+                        <h5 class="mb-0"><i class="fas fa-calendar-alt"></i> Emploi du Temps - Lundi</h5>
                     </div>
-                    <div class="card">
-                        <p>Retards justifiés : 1</p>
-                    </div>
-                    <div class="card">
-                        <p>Retards non justifiés : 2</p>
-                    </div>
-                    <div class="card">
-                        <p>Absences : 1</p>
+                    <div class="card-body">
+                        <div class="schedule-card p-2 mb-2">
+                            <h6 class="mb-1">Sc. Éco & Sociales</h6>
+                            <small class="text-muted">08:00 - 10:00</small>
+                        </div>
+                        <div class="schedule-card p-2 mb-2">
+                            <h6 class="mb-1">Éducation Physique</h6>
+                            <small class="text-muted">10:00 - 12:00</small>
+                        </div>
+                        <div class="schedule-card p-2 mb-2">
+                            <h6 class="mb-1">Anglais</h6>
+                            <small class="text-muted">13:00 - 14:00</small>
+                        </div>
+                        <div class="schedule-card p-2 mb-2">
+                            <h6 class="mb-1">Français</h6>
+                            <small class="text-muted">14:00 - 15:00</small>
+                        </div>
+                        <div class="schedule-card p-2 mb-2">
+                            <h6 class="mb-1">Physique-Chimie</h6>
+                            <small class="text-muted">15:00 - 16:00</small>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="mail">
-                <h2 id="medium-text">Mails</h2>
-                <div class="colonne">
-                    <div class="card">
-                        <p>Non lus : 10</p>
+
+            <!-- Colonne de droite -->
+            <div class="col-md-4">
+                <!-- Carte des retards -->
+                <div class="card shadow mb-4">
+                    <div class="card-header stats-header text-white">
+                        <h5 class="mb-0"><i class="fas fa-clock"></i> Assiduité</h5>
                     </div>
-                    <div class="card">
-                        <p>Important : 3</p>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <div class="stats-card p-2">
+                                    <h6>Retards</h6>
+                                    <h3>3</h3>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <div class="stats-card p-2">
+                                    <h6>Absences</h6>
+                                    <h3>1</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carte des notifications -->
+                <div class="card shadow">
+                    <div class="card-header notification-header text-white">
+                        <h5 class="mb-0"><i class="fas fa-bell"></i> Notifications</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="notification-card p-2 mb-2">
+                            <h6>Mails non lus</h6>
+                            <h3>10</h3>
+                        </div>
+                        <div class="notification-card p-2">
+                            <h6>Messages importants</h6>
+                            <h3>3</h3>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        function toggleMenu() {
-            const menu = document.querySelector('.navbar-menu');
-            menu.classList.toggle('active');
-        }
-    </script>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

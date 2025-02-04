@@ -1,0 +1,107 @@
+:root {
+    --primary-color: #4e54c8;
+    --secondary-color: #eaa42c;
+    --accent-color: #4ec89b;
+    --danger-color: #c84e4e;
+    --light-bg: #f8f9fa;
+}
+
+/* Styles généraux */
+.nav-link { 
+    color: #939393; 
+}
+.nav-link:hover { 
+    color: var(--primary-color); 
+}
+
+/* Cards */
+.card { 
+    margin-bottom: 1rem; 
+    transition: transform 0.2s;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.card:hover { 
+    transform: translateY(-5px); 
+}
+
+/* Schedule styles */
+.schedule-card { 
+    border-left: 4px solid var(--primary-color);
+    background: linear-gradient(to right, rgba(78, 84, 200, 0.1), transparent);
+    margin: 0.65rem;
+}
+
+.stats-card { 
+    border-left: 4px solid var(--secondary-color);
+    background: linear-gradient(to right, rgba(200, 155, 78, 0.1), transparent);
+}
+
+.notification-card { 
+    border-left: 4px solid var(--accent-color);
+    background: linear-gradient(to right, rgba(78, 200, 155, 0.1), transparent);
+}
+
+/* Headers */
+.card-header.schedule-header {
+    background-color: var(--primary-color);
+}
+
+.card-header.stats-header {
+    background-color: var(--secondary-color);
+}
+
+.card-header.notification-header {
+    background-color: var(--accent-color);
+}
+
+h2.welcome-text {
+    color: var(--primary-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Homework styles */
+.homework-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.homework-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+}
+
+.status-pending {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.status-done {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Grades styles */
+.grade-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+.grade-excellent { background-color: #28a745; }
+.grade-good { background-color: #17a2b8; }
+.grade-average { background-color: #ffc107; }
+.grade-poor { background-color: #dc3545; }
+
+/* Utils */
+.hidden {
+    display: none;
+}

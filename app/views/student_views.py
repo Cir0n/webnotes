@@ -41,3 +41,27 @@ class StudentViews:
                 student_class=data.get("class"),
             )
             return render_template("student/add.html")
+
+        @self.student_bp.route("/mail")
+        def student_mail():
+            student_id = session.get("user_id")
+            student = self.studentController.get_student_info(student_id)
+            return render_template("student/mail.html", student=student)
+
+        @self.student_bp.route("/schedule")
+        def student_schedule():
+            student_id = session.get("user_id")
+            student = self.studentController.get_student_info(student_id)
+            return render_template("student/schedule.html", student=student)
+
+        @self.student_bp.route("/homework")
+        def student_homework():
+            student_id = session.get("user_id")
+            student = self.studentController.get_student_info(student_id)
+            return render_template("student/homework.html", student=student)
+
+        @self.student_bp.route("/grades")
+        def student_grades():
+            student_id = session.get("user_id")
+            student = self.studentController.get_student_info(student_id)
+            return render_template("student/grades.html", student=student)

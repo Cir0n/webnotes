@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devoirs - Étudiant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #eaa42c;
+            --accent-color: #4ec89b;
+        }
+
+        .homework-card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .homework-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .homework-header {
+            background: linear-gradient(45deg, var(--primary-color), #6066d0);
+            color: white;
+            padding: 15px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .homework-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+
+        .status-pending {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .status-done {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .homework-due {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .priority-high {
+            border-left: 4px solid #dc3545;
+        }
+
+        .priority-medium {
+            border-left: 4px solid #ffc107;
+        }
+
+        .priority-low {
+            border-left: 4px solid #28a745;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    {% include 'partials/_navbar.html' %}
+
+    <div class="container-fluid py-4">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="text-primary mb-4">Devoirs à faire</h2>
+                
+                <!-- Filtres -->
+                <div class="btn-group mb-4">
+                    <button class="btn btn-outline-primary active" onclick="filterHomework('all')">Tous</button>
+                    <button class="btn btn-outline-primary" onclick="filterHomework('pending')">À faire</button>
+                    <button class="btn btn-outline-primary" onclick="filterHomework('done')">Terminés</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Devoirs en cours -->
+            <div class="col-md-8">
+                <!-- Devoir Mathématiques -->
+                <div class="card homework-card priority-high" data-status="pending">
+                    <div class="homework-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Mathématiques</h5>
+                        <span class="homework-status status-pending">À faire</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6>Exercices sur les équations</h6>
+                                <p>Pages 45-46 du manuel, exercices 1, 2 et 3</p>
+                            </div>
+                            <span class="homework-due">
+                                <i class="fas fa-calendar-alt"></i> Pour lundi
+                            </span>
+                        </div>
+                        <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-primary" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Devoir Histoire -->
+                <div class="card homework-card priority-medium" data-status="pending">
+                    <div class="homework-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Histoire</h5>
+                        <span class="homework-status status-pending">À faire</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6>Révision Seconde Guerre Mondiale</h6>
+                                <p>Chapitre 5 : La France pendant l'occupation</p>
+                            </div>
+                            <span class="homework-due">
+                                <i class="fas fa-calendar-alt"></i> Pour mardi
+                            </span>
+                        </div>
+                        <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-primary" style="width: 30%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Devoir Français (Terminé) -->
+                <div class="card homework-card priority-low" data-status="done">
+                    <div class="homework-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Français</h5>
+                        <span class="homework-status status-done">Terminé</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h6>Dissertation sur Les Fleurs du Mal</h6>
+                                <p>Analyse du poème "L'Albatros" de Baudelaire</p>
+                            </div>
+                            <span class="homework-due text-success">
+                                <i class="fas fa-check-circle"></i> Rendu le 15 Mars
+                            </span>
+                        </div>
+                        <div class="progress" style="height: 5px;">
+                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistiques -->
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-chart-pie"></i> Statistiques</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Devoirs en cours</span>
+                            <strong>5</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>Devoirs terminés</span>
+                            <strong>12</strong>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Moyenne de rendus</span>
+                            <strong>95%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function filterHomework(status) {
+            // Mettre à jour les boutons actifs
+            document.querySelectorAll('.btn-group .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filtrer les devoirs
+            const homeworks = document.querySelectorAll('.homework-card');
+            homeworks.forEach(homework => {
+                if (status === 'all') {
+                    homework.classList.remove('hidden');
+                } else {
+                    if (homework.dataset.status === status) {
+                        homework.classList.remove('hidden');
+                    } else {
+                        homework.classList.add('hidden');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

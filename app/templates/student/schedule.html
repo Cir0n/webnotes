@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emploi du temps - Étudiant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e54c8;
+            --secondary-color: #DEE2E6;
+            --accent-color: #4ec89b;
+        }
+        body {
+            background-color: #f5f5f5;
+        }
+        .schedule-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .day-header {
+            background: var(--primary-color);
+            color: white;
+        }
+        .course-block {
+            border-left: 4px solid var(--secondary-color);
+            background: linear-gradient(to right, rgba(234, 164, 44, 0.1), white);
+        }
+        .room-badge {
+            background-color: var(--accent-color);
+        }
+        .nav-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .subject {
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .course-block .maths { background-color: #0000FF; color: white; }
+        .course-block .anglais { background-color: #00CED1; }
+        .course-block .histoire { background-color: #FFFF00; }
+        .course-block .francais { background-color: #FF8C00; color: white; }
+        .course-block .eps { background-color: #008080; color: white; }
+        .course-block .physique { background-color: #800080; color: white; }
+        .course-block .sciences { background-color: #8A2BE2; color: white; }
+        .course-block .technologie { background-color: #FFD700; color: black; }
+        .course-block .recreation { background-color: #A9A9A9; color: black; }
+        .course-block .espagnol { background-color: #df2a2a; color: white; }
+        .course-block .accompagnement { background-color: rgb(143, 143, 90); color: white; }
+    </style>
+</head>
+<body>
+    {% include 'partials/_navbar.html' %}
+    <div class="container py-4 schedule-container">
+        <h2 class="text-center text-primary">Emploi du Temps</h2>
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr class="day-header">
+                    <th>Heures</th>
+                    <th>Lundi</th>
+                    <th>Mardi</th>
+                    <th>Mercredi</th>
+                    <th>Jeudi</th>
+                    <th>Vendredi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="course-block">
+                    <td>08h00</td>
+                    <td class="sciences">Sc. Éco & Sociales</td>
+                    <td class="sciences">Sciences Vie & Terre</td>
+                    <td class="accompagnement">Accompagnement Perso.</td>
+                    <td class="physique">Physique-Chimie</td>
+                    <td class="technologie">Création Innov. Techno.</td>
+                </tr>
+                <tr class="course-block">
+                    <td>09H00</td>
+                    <td class="recreation">Récréation</td>
+                    <td class="recreation">Récréation</td>
+                    <td class="recreation">Récréation</td>
+                    <td class="recreation">Récréation</td>
+                    <td class="recreation">Récréation</td>
+                </tr>
+                <tr class="course-block">
+                    <td>10h00</td>
+                    <td class="eps">Éducation Physique</td>
+                    <td class="maths">Mathématiques</td>
+                    <td class="accompagnement">Étude Surveillée</td>
+                    <td class="histoire">Histoire-Géographie</td>
+                    <td class="histoire">Histoire-Géographie</td>
+                </tr>
+                <tr class="course-block">
+                    <td>12h00</td>
+                    <td>Déjeuner</td>
+                    <td>Déjeuner</td>
+                    <td></td>
+                    <td>Déjeuner</td>
+                    <td>Déjeuner</td>
+                </tr>
+                <tr class="course-block">
+                    <td>13h00</td>
+                    <td class="anglais">Anglais LV1</td>
+                    <td class="histoire">Histoire-Géographie</td>
+                    <td></td>
+                    <td class="maths">Mathématiques</td>
+                    <td class="anglais">Anglais LV1</td>
+                </tr>
+                <tr class="course-block">
+                    <td>14h00</td>
+                    <td class="francais">Français</td>
+                    <td class="francais">Français</td>
+                    <td></td>
+                    <td class="accompagnement">Accompagnement Perso.</td>
+                    <td></td>
+                </tr>
+                <tr class="course-block">
+                    <td>15H00</td>
+                    <td class="recreation">Récréation</td>
+                    <td class="recreation">Récréation</td>
+                    <td></td>
+                    <td class="recreation">Récréation</td>
+                    <td class="recreation">Récréation</td>
+                </tr>
+                <tr class="course-block">
+                    <td>16H00</td>
+                    <td class="physique">Physique-Chimie</td>
+                    <td></td>
+                    <td></td>
+                    <td class="espagnol">Espagnol LV2</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
