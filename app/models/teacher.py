@@ -27,16 +27,19 @@ class TeacherModel:
         teacher_id,
         first_name,
         last_name,
+
     ):
         query = (
             "UPDATE teachers SET first_name = %s, last_name = %s WHERE id = %s"
         )
         self.db.execute(query, (first_name, last_name, teacher_id))
 
-
-    def edit_teacher_class_id(self, teacher_id, class_id):
+    def del_class_from_teacher(self, teacher_id):
         query = "DELETE FROM teacher_class WHERE teacher_id = %s"
         self.db.execute(query, (teacher_id,))
+
+
+    def edit_teacher_class_id(self, teacher_id, class_id):
         query = "INSERT INTO teacher_class (teacher_id, class_id) VALUES (%s, %s)"
         self.db.execute(query, (teacher_id, class_id))
 

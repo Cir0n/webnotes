@@ -173,14 +173,14 @@ class AdminViews:
             if request.method == "POST":
                 first_name = request.form.get("first_name")
                 last_name = request.form.get("last_name")
-                class_id = request.form.get("class")
+                selected_classes = request.form.getlist("class")
                 selected_languages = request.form.getlist("languages")
                 selected_options = request.form.getlist("options")
                 result = self.teacher_controller.edit_teacher(
                     teacher_id,
                     first_name,
                     last_name,
-                    class_id,
+                    selected_classes,
                     selected_languages,
                     selected_options,
                 )
