@@ -35,3 +35,14 @@ class GradeModel:
         ORDER BY g.created_at DESC
         """
         return self.db.query(query, (student_id,))
+    
+    def get_student_grades_by_subject(self, student_id, subject_id):
+        query = """
+        SELECT g.grade, g.comment, g.created_at AS date_added, sub.name AS subject_name, t.first_name AS teacher_name
+        FROM grades g
+        JOIN subjects sub ON g.subject_id = sub.id
+        JOIN teachers t ON g.teacher_id = t.id
+        WHERE g.student_id = %s AND g.subject_id = %s
+        ORDER BY g.created_at DESC
+        """
+        return self.db.query(query, (student_id, subject_id))

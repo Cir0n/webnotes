@@ -50,3 +50,11 @@ class StudentController:
     def get_student_subject(self, student_id):
         subjects = self.model.get_student_subject(student_id)
         return subjects if subjects else []
+
+    def get_student_grades_by_subject(self, student_id, subject_id):
+        grades = self.grade_model.get_student_grades_by_subject(student_id, subject_id)
+        return grades if grades else []
+
+    def get_subject_info(self, subject_id):
+        subject = self.model.get_subject_by_id(subject_id)
+        return subject 

@@ -79,3 +79,8 @@ class StudentModel:
         WHERE ss.student_id = %s
         """
         return self.db.query(query, (student_id,))
+    
+    def get_subject_by_id(self, subject_id):
+        query = "SELECT id, name, type FROM subjects WHERE id = %s"
+        result = self.db.query(query, (subject_id,))
+        return result[0] if result else None

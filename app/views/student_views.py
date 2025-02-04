@@ -10,25 +10,27 @@ class StudentViews:
         self.register_routes()
 
     def register_routes(self):
+
         @self.student_bp.route("/me")
-        def student_dashboard():
+        def student_dashboard():                            #TODO: Revoir les infos présente dans le dashboard peut être ajouter un emploie du temps etc...
             student_id = session.get("user_id")
-            student = self.controller.get_student(student_id)
-            if "error" in student:
-                return render_template("error.html")
-            return render_template("student/dashboard.html", student=student)
+            
+            if session.get("role") != "student":
+                return render_template("errors/unauthorized.html")
+            
+            grades = self.controller.get_student_grades(student_id)
+            subjects = self.controller.get_student_subject(student_id)
 
-        @self.student_bp.route("/list")
-        def list_students():
-            students = self.controller.list_students()
-            return render_template("student/list.html", students=students)
+            return render_template('student/dashboard.html', grades=grades, subjects=subjects, student_id=student_id)
 
-        @self.student_bp.route("/add", methods=["GET", "POST"])
-        def add_student():
-            data = request.form
-            self.controller.create_student(
-                first_name=data.get("first_name"),
-                last_name=data.get("last_name"),
-                student_class=data.get("class"),
-            )
-            return render_template("student/add.html")
+        @self.student_bp.route("/subject/<int:subject_id>")
+        def student_subject_grades(subject_id):
+            student_id = session.get("user_id")
+
+            if session.get("role") != "student":
+                return render_template("errors/unauthorized.html")
+            
+            subject = self.controller.get_subject_info(subject_id)
+            grades = self.controller.get_student_grades_by_subject(student_id, subject_id)
+
+            return render_template("student/subject_grades.html", grades=grades, subject=subject)
