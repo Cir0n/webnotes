@@ -35,6 +35,9 @@ class StudentController:
 
     def list_students(self):
         return self.model.get_all_students()
+    
+    def get_student_class(self, student_id):
+        return self.model.get_student_class(student_id)
 
     def create_student(
         self,

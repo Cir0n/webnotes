@@ -25,7 +25,7 @@ class TeacherController:
         teacher_id,
         first_name,
         last_name,
-        class_id,
+        class_ids,
         selected_languages,
         selected_options,
     ):
@@ -35,11 +35,11 @@ class TeacherController:
             first_name,
             last_name,
         )
-
-        if class_id:
+        self.teacher_model.del_class_from_teacher(teacher_id)
+        for class_id in class_ids:
             self.teacher_model.edit_teacher_class_id(teacher_id, class_id)
         
-        elif selected_languages:
+        if selected_languages:
             self.teacher_model.edit_teacher_selected_languages(
                 teacher_id, selected_languages
             )
@@ -68,11 +68,11 @@ class TeacherController:
             teacher_id, student_id, subject_id, grade, comment
         )
 
-    def get_student_grades(self, teacher_id, student_id):
+    def get_teacher_grades(self, teacher_id, student_id):
         return self.grade_model.get_student_grades(teacher_id, student_id)
 
-    def get_student_classes(self, class_id):
-        return self.student_model.get_student_classes(class_id)
+    def get_teacher_classes(self, class_id):
+        return self.teacher_model.get_teacher_classes(class_id)
 
     def get_teacher_subjects(self, teacher_id):
         return self.teacher_model.get_teacher_by_subject(teacher_id)

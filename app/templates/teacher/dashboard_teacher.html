@@ -1,0 +1,53 @@
+{% extends "teacher/base.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <!-- Sélecteur de classe (formulaire) -->
+        {% for class in classes %}
+        <form method="GET" action="{{ url_for('teacher_bp.class_students', class_id=class.id) }}" class="mb-4">
+            <label for="classSelect" class="form-label fw-bold">Changer de classe :</label>
+            <select id="classSelect" name="class_id" class="form-select" onchange="this.form.submit()">
+                
+                    <option value="{{ class.id }} {% if class.id == class_id %}selected{% endif %}">
+                        Classe {{ class.name }}
+                    </option>
+                
+            </select>
+        </form>
+        {% endfor %}
+
+        <!-- Liste des élèves -->
+        <div class="card">
+            <div class="card-header fw-bold">📋 Liste des Élèves</div>
+            <ul class="list-group list-group-flush">
+                {% if students %}
+                    {% for student in students %}
+                        <li class="list-group-item">
+                            <strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                            <span class="badge bg-primary">ID: {{ student.id }}</span>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item text-danger">Aucun élève inscrit dans cette classe.</li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- Matières enseignées -->
+        <div class="card mt-4">
+            <div class="card-header fw-bold">📚 Matières enseignées</div>
+            <ul class="list-group list-group-flush">
+                {% if subjects %}
+                    {% for subject in subjects %}
+                        <li class="list-group-item">{{ subject.name }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li class="list-group-item text-warning">Aucune matière attribuée.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>

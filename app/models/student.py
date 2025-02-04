@@ -93,7 +93,7 @@ class StudentModel:
         
         return user_id
 
-    def get_student_classes(self, class_id):
+    def get_student_class(self, class_id):
         query = """
         SELECT id, first_name, last_name
         From students
