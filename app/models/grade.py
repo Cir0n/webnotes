@@ -1,5 +1,6 @@
 from app.config import Database
 
+
 class GradeModel:
     def __init__(self):
         self.db = Database()
@@ -11,8 +12,12 @@ class GradeModel:
         if not subject_exists:
             raise ValueError("Invalid subject_id: Subject does not exist")
 
-        query = "INSERT INTO grades (teacher_id, student_id, subject_id, grade, comment) VALUES (%s, %s, %s, %s, %s)"
-        self.db.execute(query, (teacher_id, student_id, subject_id, grade, comment))
+        query = """
+        INSERT INTO grades (teacher_id, student_id, subject_id, grade, comment) 
+        VALUES (%s, %s, %s, %s, %s)"""
+        self.db.execute(
+            query, (teacher_id, student_id, subject_id, grade, comment)
+        )
 
     def get_student_grades(self, teacher_id, student_id):
         query = """

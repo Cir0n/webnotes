@@ -5,7 +5,9 @@ class TeacherModel:
     def __init__(self):
         self.db = Database()
 
-    def create_teacher(self, user_id, first_name, last_name, class_ids, subject_ids):
+    def create_teacher(
+        self, user_id, first_name, last_name, class_ids, subject_ids
+    ):
         query = "INSERT INTO teachers ( id, first_name, last_name) VALUES (%s, %s, %s)"
         self.db.execute(query, (user_id, first_name, last_name))
 
@@ -13,15 +15,25 @@ class TeacherModel:
             for class_id in class_ids:
                 query = "INSERT INTO teacher_class (teacher_id, class_id) VALUES (%s, %s)"
                 self.db.execute(query, (user_id, class_id))
-        
+
         if subject_ids:
             for subject_id in subject_ids:
                 query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
                 self.db.execute(query, (user_id, subject_id))
         return user_id
-    
-    def edit_teacher(self, teacher_id, first_name, last_name, class_id, selected_languages, selected_options):
-        query = "UPDATE teachers SET first_name = %s, last_name = %s WHERE id = %s"
+
+    def edit_teacher(
+        self,
+        teacher_id,
+        first_name,
+        last_name,
+        class_id,
+        selected_languages,
+        selected_options,
+    ):
+        query = (
+            "UPDATE teachers SET first_name = %s, last_name = %s WHERE id = %s"
+        )
         self.db.execute(query, (first_name, last_name, teacher_id))
 
         if class_id:
@@ -29,21 +41,21 @@ class TeacherModel:
             self.db.execute(query, (teacher_id,))
             query = "INSERT INTO teacher_class (teacher_id, class_id) VALUES (%s, %s)"
             self.db.execute(query, (teacher_id, class_id))
-        
+
         if selected_languages:
             query = "DELETE FROM teacher_subject WHERE teacher_id = %s"
             self.db.execute(query, (teacher_id,))
             for language in selected_languages:
                 query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
                 self.db.execute(query, (teacher_id, language))
-        
+
         if selected_options:
             query = "DELETE FROM teacher_subject WHERE teacher_id = %s"
             self.db.execute(query, (teacher_id,))
             for option in selected_options:
                 query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
                 self.db.execute(query, (teacher_id, option))
-            
+
     def get_all_teachers(self):
         query = """
         SELECT t.id, t.first_name, t.last_name, 
@@ -66,7 +78,7 @@ class TeacherModel:
     def delete_teacher(self, teacher_id):
         query = "DELETE FROM users WHERE id = %s"
         self.db.execute(query, (teacher_id,))
-    
+
     def get_teacher_classes(self, teacher_id):
         query = """
         SELECT c.id, c.name

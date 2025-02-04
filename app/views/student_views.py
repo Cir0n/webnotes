@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, session
 
-from app.controllers.student_controller import StudentController
 from app.controllers.class_controller import ClassController
+from app.controllers.student_controller import StudentController
 
 
 class StudentViews:
@@ -16,10 +16,16 @@ class StudentViews:
         def student_dashboard():
             student_id = session.get("user_id")
             student = self.studentController.get_student(student_id)
-            class_student = self.classController.get_one_class(student["class_id"])
+            class_student = self.classController.get_one_class(
+                student["class_id"]
+            )
             if "error" in student:
                 return render_template("error.html")
-            return render_template("student/dashboardStudent.html", student=student, class_=class_student)
+            return render_template(
+                "student/dashboardStudent.html",
+                student=student,
+                class_=class_student,
+            )
 
         @self.student_bp.route("/list")
         def list_students():
