@@ -166,32 +166,44 @@ class AdminViews:
         def edit_teacher(teacher_id):
             self.require_admin()
             result = self.teacher_controller.get_teacher(teacher_id)
+            infos_teacher = self.teacher_controller.get_all_info_teacher(teacher_id)
             classes = self.class_controller.get_all_classes()
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
+            subjects = self.subject_controller.get_subjects()
+
+            teacher = infos_teacher[0]
+            teacher_class_ids = [int(i) for i in teacher['class_ids'].split(',')]
+            teacher_subject_ids = [int(i) for i in teacher['subject_ids'].split(',')]
 
             if request.method == "POST":
                 first_name = request.form.get("first_name")
                 last_name = request.form.get("last_name")
                 selected_classes = request.form.getlist("class")
                 selected_languages = request.form.getlist("languages")
+                selected_subjects = request.form.getlist("subjects")
                 selected_options = request.form.getlist("options")
-                result = self.teacher_controller.edit_teacher(
+                self.teacher_controller.edit_teacher(
                     teacher_id,
                     first_name,
                     last_name,
                     selected_classes,
                     selected_languages,
                     selected_options,
+                    selected_subjects,
                 )
                 flash("Enseignant modifié avec succès")
                 return redirect(url_for("admin_bp.list_teachers"))
             return render_template(
                 "admin/edit_teacher.html",
                 teacher=result,
+                infos_teacher=infos_teacher,
                 classes=classes,
                 languages=languages,
                 options=options,
+                subjects=subjects,
+                teacher_class_ids=teacher_class_ids,
+                teacher_subject_ids=teacher_subject_ids
             )
 
         @self.admin_bp.route("/delete_teacher/<teacher_id>", methods=["POST"])

@@ -40,7 +40,7 @@ class TeacherViews:
             teacher_id = session.get("user_id")
             student_class = self.student_controller.get_student_class(class_id)
             teacher_classes = self.teacher_controller.get_teacher_classes(teacher_id)
-            subjects = self.teacher_controller.get_teacher_subjects(
+            subjects = self.teacher_controller.get_subject_by_teacher(
                 session.get("user_id")
             )
             return render_template(

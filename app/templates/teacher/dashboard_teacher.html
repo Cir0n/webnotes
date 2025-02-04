@@ -3,18 +3,18 @@
 {% block content %}
     <div class="container mt-4">
         <!-- Sélecteur de classe (formulaire) -->
-        {% for class in classes %}
-        <form method="GET" action="{{ url_for('teacher_bp.class_students', class_id=class.id) }}" class="mb-4">
-            <label for="classSelect" class="form-label fw-bold">Changer de classe :</label>
-            <select id="classSelect" name="class_id" class="form-select" onchange="this.form.submit()">
-                
-                    <option value="{{ class.id }} {% if class.id == class_id %}selected{% endif %}">
-                        Classe {{ class.name }}
-                    </option>
-                
-            </select>
-        </form>
-        {% endfor %}
+        <div class="mb-4">
+            <label class="form-label fw-bold">Changer de classe :</label>
+            <div class="d-flex gap-2">
+                {% for class_ in classes %}
+                    <a href="{{ url_for('teacher_bp.class_students', class_id=class_['id']) }}" 
+                       class="btn {% if class_['id'] == class_id %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        Classe {{ class_['name'] }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        
 
         <!-- Liste des élèves -->
         <div class="card">

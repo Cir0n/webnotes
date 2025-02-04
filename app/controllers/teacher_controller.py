@@ -11,6 +11,9 @@ class TeacherController:
         self.grade_model = GradeModel()
         self.student_model = StudentModel()
 
+    def get_all_info_teacher(self, teacher_id):
+        return self.teacher_model.get_all_info_teacher(teacher_id)
+
     def get_teacher(self, teacher_id):
         teacher = self.teacher_model.get_teacher_by_id(teacher_id)
         if not teacher:
@@ -25,9 +28,10 @@ class TeacherController:
         teacher_id,
         first_name,
         last_name,
-        class_ids,
+        selected_classes,
         selected_languages,
         selected_options,
+        selected_subjects,
     ):
 
         self.teacher_model.edit_teacher(
@@ -36,17 +40,12 @@ class TeacherController:
             last_name,
         )
         self.teacher_model.del_class_from_teacher(teacher_id)
-        for class_id in class_ids:
+        for class_id in selected_classes:
             self.teacher_model.edit_teacher_class_id(teacher_id, class_id)
         
         if selected_languages:
-            self.teacher_model.edit_teacher_selected_languages(
-                teacher_id, selected_languages
-            )
-        
-        elif selected_options:
-            self.teacher_model.edit_teacher_selected_options(
-                teacher_id, selected_options
+            self.teacher_model.edit_teacher_selected(
+                teacher_id, selected_languages, selected_subjects, selected_options
             )
 
         return "Success: Teacher updated successfully"
@@ -74,8 +73,8 @@ class TeacherController:
     def get_teacher_classes(self, class_id):
         return self.teacher_model.get_teacher_classes(class_id)
 
-    def get_teacher_subjects(self, teacher_id):
-        return self.teacher_model.get_teacher_by_subject(teacher_id)
+    def get_subject_by_teacher(self, teacher_id):
+        return self.teacher_model.get_subject_by_teacher(teacher_id)
 
     def delete_grade(self, teacher_id, grade_id):
         return self.grade_model.delete_grade(teacher_id, grade_id)

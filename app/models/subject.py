@@ -12,6 +12,10 @@ class SubjectModel:
     def get_all_subjects(self):
         sql = "SELECT * FROM subjects"
         return self.db.query(sql)
+    
+    def get_subjects(self):
+        sql = "SELECT id, name FROM subjects WHERE type = 'principal' ORDER BY name ASC"
+        return self.db.query(sql)
 
     def get_languages(self):
         sql = "SELECT id, name FROM subjects WHERE type = 'language' ORDER BY name ASC"
