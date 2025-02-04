@@ -83,6 +83,40 @@ class AdminViews:
                 options=options,
             )
 
+        @self.admin_bp.route(
+            "/edit_student/<student_id>", methods=["GET", "POST"]
+        )
+        def edit_student(student_id):
+            self.require_admin()
+            result = self.student_controller.get_student(student_id)
+            classes = self.class_controller.get_all_classes()
+            languages = self.subject_controller.get_languages()
+            options = self.subject_controller.get_options()
+
+            if request.method == "POST":
+                first_name = request.form.get("first_name")
+                last_name = request.form.get("last_name")
+                class_id = request.form.get("class")
+                selected_languages = request.form.getlist("languages")
+                selected_options = request.form.getlist("options")
+                result = self.student_controller.edit_student(
+                    student_id,
+                    first_name,
+                    last_name,
+                    class_id,
+                    selected_languages,
+                    selected_options,
+                )
+                flash("Etudiant modifié avec succès")
+                return redirect(url_for("admin_bp.list_students"))
+            return render_template(
+                "admin/edit_student.html",
+                student=result,
+                classes=classes,
+                languages=languages,
+                options=options,
+            )
+
         @self.admin_bp.route("/delete_student/<student_id>", methods=["POST"])
         def delete_student(student_id):
             self.require_admin()
@@ -124,6 +158,40 @@ class AdminViews:
 
             return render_template(
                 "admin/add_teacher.html", subjects=subjects, classes=classes
+            )
+
+        @self.admin_bp.route(
+            "/edit_teacher/<teacher_id>", methods=["GET", "POST"]
+        )
+        def edit_teacher(teacher_id):
+            self.require_admin()
+            result = self.teacher_controller.get_teacher(teacher_id)
+            classes = self.class_controller.get_all_classes()
+            languages = self.subject_controller.get_languages()
+            options = self.subject_controller.get_options()
+
+            if request.method == "POST":
+                first_name = request.form.get("first_name")
+                last_name = request.form.get("last_name")
+                class_id = request.form.get("class")
+                selected_languages = request.form.getlist("languages")
+                selected_options = request.form.getlist("options")
+                result = self.teacher_controller.edit_teacher(
+                    teacher_id,
+                    first_name,
+                    last_name,
+                    class_id,
+                    selected_languages,
+                    selected_options,
+                )
+                flash("Enseignant modifié avec succès")
+                return redirect(url_for("admin_bp.list_teachers"))
+            return render_template(
+                "admin/edit_teacher.html",
+                teacher=result,
+                classes=classes,
+                languages=languages,
+                options=options,
             )
 
         @self.admin_bp.route("/delete_teacher/<teacher_id>", methods=["POST"])

@@ -70,6 +70,13 @@ class TeacherViews:
         @self.teacher_bp.route("/student/<int:student_id>")
         def student_grades(student_id):
             teacher_id = session.get("user_id")
+            class_id = request.args.get(
+                "class_id"
+            )  # Ensure class_id is passed as a query parameter
+            if not class_id:
+                # Handle the case where class_id is not provided
+                flash("Class ID is required")
+                return redirect(url_for("teacher_bp.teacher_dashboard"))
             grades = self.controller.get_student_grades(teacher_id, student_id)
             student_info = self.student_controller.get_student_info(student_id)
             class_id = student_info["class_id"]

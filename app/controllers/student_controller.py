@@ -13,6 +13,26 @@ class StudentController:
             return "ERROR: Student not found"
         return student
 
+    def edit_student(
+        self,
+        student_id,
+        first_name,
+        last_name,
+        class_id,
+        selected_languages,
+        selected_options,
+    ):
+
+        self.model.edit_student(
+            student_id,
+            first_name,
+            last_name,
+            class_id,
+            selected_languages,
+            selected_options,
+        )
+        return "Success: Student updated successfully"
+
     def list_students(self):
         return self.model.get_all_students()
 

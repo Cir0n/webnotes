@@ -53,7 +53,7 @@
                 </td>
                 <td>
                     <!-- Bouton Modifier -->
-                    <a href="" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="{{ url_for('admin_bp.edit_student', student_id=student.id) }}" class="btn btn-warning btn-sm">Modifier</a>
 
                     <!-- Bouton Supprimer -->
                     <form action="{{ url_for('admin_bp.delete_student', student_id=student.id) }}" method="POST" class="d-inline">

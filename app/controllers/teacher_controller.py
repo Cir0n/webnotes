@@ -20,6 +20,27 @@ class TeacherController:
     def list_teachers(self):
         return self.teacher_model.get_all_teachers()
 
+    def edit_teacher(
+        self,
+        teacher_id,
+        first_name,
+        last_name,
+        class_id,
+        selected_languages,
+        selected_options,
+    ):
+
+        self.teacher_model.edit_teacher(
+            teacher_id,
+            first_name,
+            last_name,
+            class_id,
+            selected_languages,
+            selected_options,
+        )
+
+        return "Success: Teacher updated successfully"
+
     def create_teacher(
         self, username, password, first_name, last_name, class_ids, subject_ids
     ):
