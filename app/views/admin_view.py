@@ -88,7 +88,7 @@ class AdminViews:
         )
         def edit_student(student_id):
             self.require_admin()
-            result = self.student_controller.get_student(student_id)
+            result = self.student_controller.get_student_info(student_id)
             classes = self.class_controller.get_all_classes()
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
