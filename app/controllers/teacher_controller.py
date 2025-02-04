@@ -34,10 +34,20 @@ class TeacherController:
             teacher_id,
             first_name,
             last_name,
-            class_id,
-            selected_languages,
-            selected_options,
         )
+
+        if class_id:
+            self.teacher_model.edit_teacher_class_id(teacher_id, class_id)
+        
+        elif selected_languages:
+            self.teacher_model.edit_teacher_selected_languages(
+                teacher_id, selected_languages
+            )
+        
+        elif selected_options:
+            self.teacher_model.edit_teacher_selected_options(
+                teacher_id, selected_options
+            )
 
         return "Success: Teacher updated successfully"
 
@@ -63,9 +73,6 @@ class TeacherController:
 
     def get_student_classes(self, class_id):
         return self.student_model.get_student_classes(class_id)
-
-    def get_teacher_classes(self, teacher_id):
-        return self.teacher_model.get_teacher_classes(teacher_id)
 
     def get_teacher_subjects(self, teacher_id):
         return self.teacher_model.get_teacher_by_subject(teacher_id)

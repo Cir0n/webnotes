@@ -15,7 +15,7 @@ class StudentViews:
         @self.student_bp.route("/me")
         def student_dashboard():
             student_id = session.get("user_id")
-            student = self.studentController.get_student(student_id)
+            student = self.studentController.get_student_info(student_id)
             class_student = self.classController.get_one_class(
                 student["class_id"]
             )
