@@ -31,13 +31,14 @@ class AdminViews:
             return redirect(url_for("auth_bp.login"))
 
     def register_routes(self):
-        @login_required
         @self.admin_bp.route("/dashboard")
+        @login_required
         def admin_dashboard():
             self.require_admin()
             return render_template("admin/dashboard.html")
 
         @self.admin_bp.route("/students")
+        @login_required
         def list_students():
             self.require_admin()
             students = self.student_controller.list_students()
@@ -51,6 +52,7 @@ class AdminViews:
             )
 
         @self.admin_bp.route("/add_student", methods=["GET", "POST"])
+        @login_required
         def add_student():  # TODO: faire en sorte qu'il n'y ait pas besoin de re démarrer le serveur flask pour pouvoir utiliser le compte d'un profil que l'on vien d'ajouter
             self.require_admin()
             classes = self.class_controller.get_all_classes()
@@ -88,6 +90,7 @@ class AdminViews:
         @self.admin_bp.route(
             "/edit_student/<student_id>", methods=["GET", "POST"]
         )
+        @login_required
         def edit_student(student_id):
             self.require_admin()
             result = self.student_controller.get_student_info(student_id)
@@ -132,6 +135,7 @@ class AdminViews:
             )
 
         @self.admin_bp.route("/delete_student/<student_id>", methods=["POST"])
+        @login_required
         def delete_student(student_id):
             self.require_admin()
             result = self.student_controller.delete_student(student_id)
@@ -141,12 +145,14 @@ class AdminViews:
         # ----------------------------TEACHERS--------------------------------
 
         @self.admin_bp.route("/teachers")
+        @login_required
         def list_teachers():
             self.require_admin()
             teachers = self.teacher_controller.list_teachers()
             return render_template("admin/teachers.html", teachers=teachers)
 
         @self.admin_bp.route("/add_teacher", methods=["GET", "POST"])
+        @login_required
         def add_teacher():
             self.require_admin()
             subjects = self.subject_controller.get_all_subjects()
@@ -177,6 +183,7 @@ class AdminViews:
         @self.admin_bp.route(
             "/edit_teacher/<teacher_id>", methods=["GET", "POST"]
         )
+        @login_required
         def edit_teacher(teacher_id):
             self.require_admin()
             result = self.teacher_controller.get_teacher(teacher_id)
@@ -227,6 +234,7 @@ class AdminViews:
             )
 
         @self.admin_bp.route("/delete_teacher/<teacher_id>", methods=["POST"])
+        @login_required
         def delete_teacher(teacher_id):
             self.require_admin()
             result = self.teacher_controller.delete_teacher(teacher_id)
