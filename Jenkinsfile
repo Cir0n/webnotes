@@ -26,7 +26,7 @@ pipeline {
                     mvn sonar:sonar \
                     -Dsonar.projectKey=jenkins \
                     -Dsonar.host.url=http://172.20.96.1:32768 \
-                    -Dsonar.token=$SONAR_TOKEN
+                    -Dsonar.token=${SONAR_TOKEN}
                     '''
                 }
             }
