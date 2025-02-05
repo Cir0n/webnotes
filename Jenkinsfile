@@ -1,7 +1,8 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven' 
+        maven 'Maven'
+        sonarQubeScanner 'SonarScanner' 
     }
     environment {
         SONARQUBE_SERVER = 'SonarQube'
@@ -19,17 +20,15 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Code Quality - SonarQube') {
+        stage('SonarQube Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                    withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                        sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=jenkins \
-                        -Dsonar.host.url=http://172.20.96.1:32768 \
-                        -Dsonar.token=$SONAR_TOKEN
-                        '''
-                    }
+                withSonarQubeEnv('SonarQube') { 
+                    sh '''
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=jenkins \
+                    -Dsonar.host.url=http://172.20.10.2:9000 \
+                    -Dsonar.token=$SONAR_TOKEN
+                    '''
                 }
             }
         }
