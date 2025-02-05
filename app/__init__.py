@@ -13,7 +13,7 @@ def create_app():
 
     app.config.from_object(Config)
 
-
+    csrf.init_app(app)
     bcrypt.init_app(app)
 
     student_views = StudentViews()
