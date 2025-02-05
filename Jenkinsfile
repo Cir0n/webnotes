@@ -20,17 +20,13 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') { 
-                    sh '''
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=jenkins \
-                    -Dsonar.host.url=http://172.20.96.1:32768 \
-                    -Dsonar.token=${SONAR_TOKEN}
-                    '''
-                }
+            environment {
+                SONAR_HOST_URL = 'http://172.20.96.1:32768/' 
+                SONAR_AUTH_TOKEN = credentials('SONAR_TOKEN') 
             }
-        }
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.projectKey=sample_project -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_AUTH_TOKEN'
+            }
     }
     post {
         success {
