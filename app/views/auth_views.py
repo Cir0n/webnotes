@@ -7,6 +7,7 @@ from flask import (
     url_for,
 )
 
+from app.forms.forms_auth import LoginForm
 from app.controllers.auth_controller import AuthController
 
 
@@ -20,26 +21,27 @@ class AuthViews:
 
         @self.auth_bp.route("/login", methods=["GET", "POST"])
         def login():
-            if request.method == "POST":
-                username = request.form.get("username")
-                password = request.form.get("password")
+            form = LoginForm() 
+
+            if request.method == "POST" and form.validate_on_submit():
+                username = form.username.data
+                password = form.password.data
                 result = self.controller.login(username, password)
 
                 if "error" in result:
-                    return render_template(
-                        "auth/login.html", message=result["error"]
-                    )
+                    return render_template("auth/login.html", form=form, message=result["error"])
+
                 if result["role"] == "student":
                     return redirect(url_for("student_bp.student_dashboard"))
                 if result["role"] == "teacher":
-                    return redirect(
-                        url_for("teacher_bp.teacher_dashboard")
-                    )  # FIXME: teacher_bp is not defined mais marche pour student
+                    return redirect(url_for("teacher_bp.teacher_dashboard"))
                 if result["role"] == "admin":
                     return redirect(url_for("admin_bp.admin_dashboard"))
 
                 return redirect("/profile")
-            return render_template("auth/login.html")
+
+            return render_template("auth/login.html", form=form) 
+        
 
         @self.auth_bp.route("/register", methods=["GET", "POST"])
         def register():

@@ -11,13 +11,14 @@
     <div class="card p-4 shadow-lg" style="width: 350px;">
         <h2 class="text-center">Login</h2>
         <form action="/login" method="POST">
+            {{ form.hidden_tag() }}
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
-                <input type="text" id="username" name="username" class="form-control" required>
+                {{ form.username(class_="form-control", placeholder="Entrez votre nom d'utilisateur") }}
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                {{ form.password(class_="form-control", placeholder="Entrez votre mot de passe") }}
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>

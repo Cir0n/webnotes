@@ -4,59 +4,109 @@
 <div class="container mt-4">
     <h2>Ajouter un Étudiant</h2>
 
-    <form action="{{ url_for('admin_bp.add_student') }}" method="POST">
+    <form action="{{ url_for('admin_bp.add_student_form') }}" method="POST">
+        {{ form.hidden_tag() }}
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username :</label>
-                    <input type="username" name="username" id="username" class="form-control" required>
+                    {{ form.username(class_="form-control", placeholder="Entrez le nom d'utilisateur") }}
+                    {% if form.username.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Mot de passe :</label>
-                    <input type="password" name="password" id="password" class="form-control" required>
+                    {{ form.password(class_="form-control", placeholder="Entrez le mot de passe") }}
+                    {% if form.password.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
                     <label for="first_name" class="form-label">Prénom :</label>
-                    <input type="text" name="first_name" id="first_name" class="form-control" required>
+                    {{ form.first_name(class_="form-control", placeholder="Entrez le prénom") }}
+                    {% if form.first_name.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.first_name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Nom :</label>
-                    <input type="text" name="last_name" id="last_name" class="form-control" required>
+                    {{ form.last_name(class_="form-control", placeholder="Entrez le nom") }}
+                    {% if form.last_name.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.last_name.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Classe :</label>
-                    {% for class_ in classes %}
+                    {% for value, label in form.class_id.choices %}
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="class" value="{{ class_['id'] }}" required>
-                            <label class="form-check-label">{{ class_['name'] }}</label>
+                            <input class="form-check-input" type="radio" name="class_id" value="{{ value }}" id="class_{{ value }}">
+                            <label class="form-check-label" for="class_{{ value }}">{{ label }}</label>
                         </div>
                     {% endfor %}
+                    {% if form.class_id.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.class_id.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Langues :</label>
                     {% for language in languages %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="languages" value="{{ language['id'] }}">
-                            <label class="form-check-label">{{ language['name'] }}</label>
+                            <input class="form-check-input" type="checkbox" name="languages" value="{{ language['id'] }}" id="language_{{ language['id'] }}">
+                            <label class="form-check-label" for="language_{{ language['id'] }}">{{ language['name'] }}</label>
                         </div>
                     {% endfor %}
+                    {% if form.languages.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.languages.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Options :</label>
                     {% for option in options %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="options" value="{{ option['id'] }}">
-                            <label class="form-check-label">{{ option['name'] }}</label>
+                            <input class="form-check-input" type="checkbox" name="options" value="{{ option['id'] }}" id="option_{{ option['id'] }}">
+                            <label class="form-check-label" for="option_{{ option['id'] }}">{{ option['name'] }}</label>
                         </div>
                     {% endfor %}
+                    {% if form.options.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.options.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
