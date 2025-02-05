@@ -1,5 +1,6 @@
 from flask import Flask
 
+from app.config import Config
 from app.extensions import bcrypt, csrf
 from app.views.admin_view import AdminViews
 from app.views.auth_views import AuthViews
@@ -10,8 +11,7 @@ from app.views.teacher_views import TeacherViews
 def create_app():
     app = Flask(__name__)
 
-
-    app.config["SECRET_KEY"] = "your_secret_key"  # TODO: créer une clé secrête
+    app.config.from_object(Config)
 
 
     bcrypt.init_app(app)

@@ -1,14 +1,5 @@
-from app.models.user import UserModel
+import os
 
-def create_admin():
-    username = input("Enter username: ")
-    password = input("Enter password: ")
-
-    user_model = UserModel()
-    admin_id = user_model.add_admin(username, password)
-
-    print(f"Admin created with id: {admin_id}")
+print(os.urandom(12).hex())
 
 
-if __name__ == "__main__":
-    create_admin()
