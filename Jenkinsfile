@@ -19,20 +19,20 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('SonarQube Analysis') {
+        stage('Code Quality - SonarQube') {
             steps {
-                echo 'Running SonarQube analysis...'
-                withSonarQubeEnv("${SONARQUBE_SERVER}") {
-                    sh '''
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=jenkins \
-                    -Dsonar.host.url=http://172.20.96.1:32768 \
-                    -Dsonar.token=%SONAR_TOKEN
-                    '''
+                withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+                    withSonarQubeEnv("${SONARQUBE_SERVER}") {
+                        sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=jenkins \
+                        -Dsonar.host.url=http://172.20.96.1:32768 \
+                        -Dsonar.token=$SONAR_TOKEN
+                        '''
+                    }
                 }
             }
         }
-    }
     post {
         success {
             echo 'Pipeline succeeded.'
