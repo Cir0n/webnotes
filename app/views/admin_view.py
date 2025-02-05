@@ -75,7 +75,7 @@ class AdminViews:
                     selected_options,
                 )
                 flash("etudiant ajouter avec succès")
-                return redirect(url_for("admin_bp.list_students"))
+                return redirect(url_for("admin_bp.list_students"), 200)
 
             return render_template(
                 "admin/add_student.html",
