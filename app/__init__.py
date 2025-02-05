@@ -13,7 +13,7 @@ def create_app():
 
     app.config["SECRET_KEY"] = "your_secret_key"  # TODO: créer une clé secrête
 
-    csrf.init_app(app)
+
     bcrypt.init_app(app)
 
     student_views = StudentViews()
