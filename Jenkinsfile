@@ -27,6 +27,7 @@ pipeline {
             steps {
                 sh 'mvn sonar:sonar -Dsonar.projectKey=sample_project -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_AUTH_TOKEN'
             }
+        }
     }
     post {
         success {
