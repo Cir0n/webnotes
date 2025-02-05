@@ -10,12 +10,14 @@
 
                 <div class="mb-3">
                     <label for="first_name" class="form-label">Prénom :</label>
-                    <input type="text" name="first_name" id="first_name" class="form-control" required>
+                    <input type="text" name="first_name" id="first_name" class="form-control" required
+                        value="{{ student.first_name }}">
                 </div>
 
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Nom :</label>
-                    <input type="text" name="last_name" id="last_name" class="form-control" required>
+                    <input type="text" name="last_name" id="last_name" class="form-control" required
+                        value="{{ student.last_name }}">
                 </div>
             </div>
 
@@ -24,7 +26,8 @@
                     <label class="form-label fw-bold">Classe :</label>
                     {% for class_ in classes %}
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="class" value="{{ class_['id'] }}" required>
+                            <input class="form-check-input" type="radio" name="class" value="{{ class_['id'] }}" required
+                                {% if class_.id == student_class_id %}checked{% endif %}>
                             <label class="form-check-label">{{ class_.name }}</label>
                         </div>
                     {% endfor %}
@@ -34,7 +37,8 @@
                     <label class="form-label fw-bold">Langues :</label>
                     {% for language in languages %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="languages" value="{{ language['id'] }}">
+                            <input class="form-check-input" type="checkbox" name="languages" value="{{ language['id'] }}"
+                                {% if language.id in student_subject_ids %}checked{% endif %}>
                             <label class="form-check-label">{{ language.name }}</label>
                         </div>
                     {% endfor %}
@@ -44,7 +48,8 @@
                     <label class="form-label fw-bold">Options :</label>
                     {% for option in options %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="options" value="{{ option['id'] }}">
+                            <input class="form-check-input" type="checkbox" name="options" value="{{ option['id'] }}"
+                                {% if option.id in student_subject_ids %}checked{% endif %}>
                             <label class="form-check-label">{{ option.name }}</label>
                         </div>
                     {% endfor %}

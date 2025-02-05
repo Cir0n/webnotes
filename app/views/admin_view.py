@@ -89,9 +89,15 @@ class AdminViews:
         def edit_student(student_id):
             self.require_admin()
             result = self.student_controller.get_student_info(student_id)
+            infos_student = self.student_controller.get_all_info_student(student_id)
             classes = self.class_controller.get_all_classes()
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
+
+            student = infos_student[0]
+            print(student)
+            student_class_id = student['class_id']
+            student_subject_ids = [int(i) for i in student['subject_ids'].split(',')]
 
             if request.method == "POST":
                 first_name = request.form.get("first_name")
@@ -115,6 +121,8 @@ class AdminViews:
                 classes=classes,
                 languages=languages,
                 options=options,
+                student_class_id=student_class_id,
+                student_subject_ids=student_subject_ids,
             )
 
         @self.admin_bp.route("/delete_student/<student_id>", methods=["POST"])

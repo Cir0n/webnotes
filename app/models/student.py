@@ -24,6 +24,23 @@ class StudentModel:
         GROUP BY s.id, s.first_name, s.last_name, c.name
         """
         return self.db.query(sql)
+    
+    def get_all_info_student(self, student_id):
+        query = """
+        SELECT 
+        s.id, 
+        s.first_name, 
+        s.last_name, 
+        s.class_id AS class_id,  -- Un élève appartient à une seule classe
+        GROUP_CONCAT(DISTINCT sub.id SEPARATOR ',') AS subject_ids
+        FROM students s
+        LEFT JOIN student_subject ss ON s.id = ss.student_id
+        LEFT JOIN subjects sub ON ss.subject_id = sub.id
+        WHERE s.id = %s
+        GROUP BY s.id, s.first_name, s.last_name, s.class_id;
+
+        """
+        return self.db.query(query, (student_id,))
 
     def edit_student(
         self,

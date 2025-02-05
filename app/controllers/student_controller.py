@@ -12,6 +12,9 @@ class StudentController:
         if not student:
             return "ERROR: Student not found"
         return student
+    
+    def get_all_info_student(self, student_id):
+        return self.model.get_all_info_student(student_id)
 
     def edit_student(
         self,
