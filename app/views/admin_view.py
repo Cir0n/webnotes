@@ -7,6 +7,7 @@ from flask import (
     session,
     url_for,
 )
+from flask_login import login_required
 
 from app.controllers.class_controller import ClassController
 from app.controllers.student_controller import StudentController
@@ -30,7 +31,7 @@ class AdminViews:
             return redirect(url_for("auth_bp.login"))
 
     def register_routes(self):
-
+        @login_required
         @self.admin_bp.route("/dashboard")
         def admin_dashboard():
             self.require_admin()

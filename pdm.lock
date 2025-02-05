@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:ac39516ce62debf9ae7f52ff40712d2b6a003c282317252d87e94bb5eb0646c8"
+content_hash = "sha256:6e9c0efa6317d42c5694f89d28fe44f37a6d5aa4fce5ca57fda65a833ccfd44c"
 
 [[metadata.targets]]
 requires_python = "==3.12.*"
@@ -151,6 +151,21 @@ dependencies = [
 files = [
     {file = "Flask-Bcrypt-1.0.1.tar.gz", hash = "sha256:f07b66b811417ea64eb188ae6455b0b708a793d966e1a80ceec4a23bc42a4369"},
     {file = "Flask_Bcrypt-1.0.1-py3-none-any.whl", hash = "sha256:062fd991dc9118d05ac0583675507b9fe4670e44416c97e0e6819d03d01f808a"},
+]
+
+[[package]]
+name = "flask-login"
+version = "0.6.3"
+requires_python = ">=3.7"
+summary = "User authentication and session management for Flask."
+groups = ["default"]
+dependencies = [
+    "Flask>=1.0.4",
+    "Werkzeug>=1.0.1",
+]
+files = [
+    {file = "Flask-Login-0.6.3.tar.gz", hash = "sha256:5e23d14a607ef12806c699590b89d0f0e0d67baeec599d75947bf9c147330333"},
+    {file = "Flask_Login-0.6.3-py3-none-any.whl", hash = "sha256:849b25b82a436bf830a054e74214074af59097171562ab10bfa999e6b78aae5d"},
 ]
 
 [[package]]
