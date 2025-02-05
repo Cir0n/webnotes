@@ -73,6 +73,11 @@ class AdminViews:
                     selected_languages,
                     selected_options,
                 )
+
+                if 'error' in result:
+                    flash(result["error"])
+                    return render_template("admin/add_student.html", error=result['error'], classes=classes, languages=languages, options=options)
+                                    
                 flash("etudiant ajouter avec succès")
                 return redirect(url_for("admin_bp.list_students"))
 
@@ -105,12 +110,22 @@ class AdminViews:
             classes = self.class_controller.get_all_classes()
 
             if request.method == "POST":
+                print(request.form)
                 username = request.form.get("username")
                 password = request.form.get("password")
                 first_name = request.form.get("first_name")
                 last_name = request.form.get("last_name")
                 selected_classes = request.form.getlist("classes")
-                selected_subjects = request.form.getlist("subjects")
+                selected_subjects = request.form.getlist("subjects") 
+                if not selected_subjects:
+                    error = "❌ Vous devez sélectionner au moins une matière."
+                    print(error)
+                    flash(error, "danger")
+                    return render_template("admin/add_teacher.html", 
+                                        error=error, 
+                                        classes=classes, 
+                                        subjects=subjects)
+
                 result = self.teacher_controller.create_teacher(
                     username,
                     password,
@@ -119,6 +134,12 @@ class AdminViews:
                     selected_classes,
                     selected_subjects,
                 )
+                
+                if 'error' in result:
+                    flash(result['error'])
+                    return render_template(
+                        "admin/add_teacher.html", error=result['error'], subjects=subjects, classes=classes)
+                
                 flash(result)
                 return redirect(url_for("admin_bp.list_teachers"))
 

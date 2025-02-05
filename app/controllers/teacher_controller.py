@@ -2,7 +2,7 @@ from app.models.grade import GradeModel
 from app.models.student import StudentModel
 from app.models.teacher import TeacherModel
 from app.models.user import UserModel
-
+from app.utils import is_valid_name, is_valid_username, is_valid_grade
 
 class TeacherController:
     def __init__(self):
@@ -44,6 +44,15 @@ class TeacherController:
     def create_teacher(
         self, username, password, first_name, last_name, class_ids, subject_ids
     ):
+        if not is_valid_name(first_name) or not is_valid_name(last_name):
+            return {"error": "Le prénom et le nom ne doivent contenir que des lettres"}
+        
+        if not is_valid_username(username):
+            return {"error": "Le nom d'utilisateur doit contenir que des lettres, chiffres et underscores."}
+        
+        if self.user_model.get_user_by_username(username):
+            return {"error": "Le nom d'utilisateur est déjà utilisé"}
+
         user_id = self.user_model.add_user(username, password, role="teacher")
         self.teacher_model.create_teacher(
             user_id, first_name, last_name, class_ids, subject_ids
@@ -54,6 +63,9 @@ class TeacherController:
         self.teacher_model.delete_teacher(teacher_id)
 
     def add_grade(self, teacher_id, student_id, subject_id, grade, comment=""):
+        if not is_valid_grade(grade):
+            return {"error: Les notes doivent être un nombre entre 0 et 20"}
+        
         self.grade_model.add_grade(
             teacher_id, student_id, subject_id, grade, comment
         )

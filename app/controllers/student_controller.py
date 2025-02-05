@@ -1,6 +1,7 @@
 from app.models.student import StudentModel
 from app.models.grade import GradeModel
 from app.models.user import UserModel
+from app.utils import is_valid_name, is_valid_username, is_valid_grade
 
 
 class StudentController:
@@ -28,6 +29,14 @@ class StudentController:
         selected_languages,
         selected_options,
     ):
+        if not is_valid_name(first_name):
+            return {"error": "Le prenom doit contenir que des lettres"}
+        
+        if not is_valid_username(username):
+            return {"error": "Le nom d'utilisateur doit contenir que des lettre, chiffre et underscores."}
+        
+        if self.user_model.get_user_by_username(username):
+            return {"error": "Le nom d'utilisateur est déjà utilisé"}
 
         user_id = self.user_model.add_user(username, password, role="student")
         self.model.create_student(
@@ -38,6 +47,7 @@ class StudentController:
             selected_languages,
             selected_options,
         )
+
         return "Success: Student created successfully"
 
     def delete_student(self, student_id):
