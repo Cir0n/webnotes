@@ -3,71 +3,54 @@
     --secondary-color: #eaa42c;
     --accent-color: #4ec89b;
     --danger-color: #c84e4e;
-    --light-bg: #f8f9fa;
 }
 
-/* Styles généraux */
-.nav-link { 
-    color: #939393; 
-}
-.nav-link:hover { 
-    color: var(--primary-color); 
+body {
+    background-color: #f5f5f5;
 }
 
-/* Cards */
-.card { 
-    margin-bottom: 1rem; 
-    transition: transform 0.2s;
+/* Général */
+.hidden {
+    display: none;
+}
+
+/* Cartes et Conteneurs */
+.subject-card, .homework-card, .schedule-container {
     border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.card:hover { 
-    transform: translateY(-5px); 
-}
-
-/* Schedule styles */
-.schedule-card { 
-    border-left: 4px solid var(--primary-color);
-    background: linear-gradient(to right, rgba(78, 84, 200, 0.1), transparent);
-    margin: 0.65rem;
-}
-
-.stats-card { 
-    border-left: 4px solid var(--secondary-color);
-    background: linear-gradient(to right, rgba(200, 155, 78, 0.1), transparent);
-}
-
-.notification-card { 
-    border-left: 4px solid var(--accent-color);
-    background: linear-gradient(to right, rgba(78, 200, 155, 0.1), transparent);
-}
-
-/* Headers */
-.card-header.schedule-header {
-    background-color: var(--primary-color);
-}
-
-.card-header.stats-header {
-    background-color: var(--secondary-color);
-}
-
-.card-header.notification-header {
-    background-color: var(--accent-color);
-}
-
-h2.welcome-text {
-    color: var(--primary-color);
-    padding-bottom: 0.5rem;
-}
-
-/* Homework styles */
-.homework-card {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    overflow: hidden;
+    background-color: white;
+    padding: 20px;
 }
 
+.homework-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.2s;
+}
+
+.grade-item, .course-block {
+    border-left: 4px solid var(--secondary-color);
+    margin: 10px;
+    padding: 15px;
+    background: linear-gradient(to right, rgba(234, 164, 44, 0.1), white);
+    border-radius: 5px;
+    transition: transform 0.2s;
+}
+
+.grade-item:hover {
+    transform: translateX(5px);
+}
+
+/* Titres et en-têtes */
+.grade-header, .homework-header, .day-header {
+    background: linear-gradient(45deg, var(--primary-color), #6066d0);
+    color: white;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Statuts et Indicateurs */
 .homework-status {
     padding: 5px 10px;
     border-radius: 15px;
@@ -84,7 +67,23 @@ h2.welcome-text {
     color: white;
 }
 
-/* Grades styles */
+.homework-due {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.priority-high { border-left: 4px solid #dc3545; }
+.priority-medium { border-left: 4px solid #ffc107; }
+.priority-low { border-left: 4px solid #28a745; }
+
+.average-box {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
 .grade-circle {
     width: 40px;
     height: 40px;
@@ -101,7 +100,75 @@ h2.welcome-text {
 .grade-average { background-color: #ffc107; }
 .grade-poor { background-color: #dc3545; }
 
-/* Utils */
-.hidden {
-    display: none;
+.progress {
+    height: 8px;
+    border-radius: 4px;
+}
+
+/* Emails */
+.email-list {
+    border-right: 1px solid #dee2e6;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+.email-content {
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+.email-item {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    cursor: pointer;
+}
+
+.email-item:hover {
+    background-color: rgba(78, 84, 200, 0.1);
+}
+
+.email-item.unread {
+    background-color: rgba(234, 164, 44, 0.1);
+    font-weight: bold;
+}
+
+.compose-btn {
+    background-color: var(--primary-color);
+    color: white;
+    margin: 10px;
+}
+
+/* Emploi du temps */
+.table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.subject {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Matières spécifiques */
+.course-block .maths { background-color: #0000FF; color: white; }
+.course-block .anglais { background-color: #00CED1; }
+.course-block .histoire { background-color: #FFFF00; }
+.course-block .francais { background-color: #FF8C00; color: white; }
+.course-block .eps { background-color: #008080; color: white; }
+.course-block .physique { background-color: #800080; color: white; }
+.course-block .sciences { background-color: #8A2BE2; color: white; }
+.course-block .technologie { background-color: #FFD700; color: black; }
+.course-block .recreation { background-color: #A9A9A9; color: black; }
+.course-block .espagnol { background-color: #df2a2a; color: white; }
+.course-block .accompagnement { background-color: rgb(143, 143, 90); color: white; }
+
+/* Navigation */
+.nav-btn {
+    background-color: var(--primary-color);
+    color: white;
 }

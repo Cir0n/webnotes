@@ -5,46 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie Étudiant</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #4e54c8;
-            --secondary-color: #eaa42c;
-            --accent-color: #4ec89b;
-        }
-        
-        .email-list {
-            border-right: 1px solid #dee2e6;
-            height: calc(100vh - 56px);
-            overflow-y: auto;
-        }
-        
-        .email-content {
-            height: calc(100vh - 56px);
-            overflow-y: auto;
-        }
-        
-        .email-item {
-            padding: 10px;
-            border-bottom: 1px solid #dee2e6;
-            cursor: pointer;
-        }
-        
-        .email-item:hover {
-            background-color: rgba(78, 84, 200, 0.1);
-        }
-        
-        .email-item.unread {
-            background-color: rgba(234, 164, 44, 0.1);
-            font-weight: bold;
-        }
-        
-        .compose-btn {
-            background-color: var(--primary-color);
-            color: white;
-            margin: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">  
 </head>
 <body>
     {% include 'partials/_navbar.html' %}
