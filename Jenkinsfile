@@ -2,7 +2,6 @@ pipeline {
     agent any
     tools {
         maven 'Maven'
-        sonarQubeScanner 'SonarScanner' 
     }
     environment {
         SONARQUBE_SERVER = 'SonarQube'
@@ -26,7 +25,7 @@ pipeline {
                     sh '''
                     mvn sonar:sonar \
                     -Dsonar.projectKey=jenkins \
-                    -Dsonar.host.url=http://172.20.10.2:9000 \
+                    -Dsonar.host.url=http://172.20.96.1:32768 \
                     -Dsonar.token=$SONAR_TOKEN
                     '''
                 }
