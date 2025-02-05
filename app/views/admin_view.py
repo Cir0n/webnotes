@@ -21,6 +21,7 @@ class AdminViews:
         self.subject_controller = SubjectController()
         self.class_controller = ClassController()
         self.teacher_controller = TeacherController()
+        
         self.register_routes()
 
     def require_admin(self):
@@ -89,15 +90,19 @@ class AdminViews:
         def edit_student(student_id):
             self.require_admin()
             result = self.student_controller.get_student_info(student_id)
-            infos_student = self.student_controller.get_all_info_student(student_id)
+            infos_student = self.student_controller.get_all_info_student(
+                student_id
+            )
             classes = self.class_controller.get_all_classes()
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
 
             student = infos_student[0]
             print(student)
-            student_class_id = student['class_id']
-            student_subject_ids = [int(i) for i in student['subject_ids'].split(',')]
+            student_class_id = student["class_id"]
+            student_subject_ids = [
+                int(i) for i in student["subject_ids"].split(",")
+            ]
 
             if request.method == "POST":
                 first_name = request.form.get("first_name")
@@ -174,15 +179,21 @@ class AdminViews:
         def edit_teacher(teacher_id):
             self.require_admin()
             result = self.teacher_controller.get_teacher(teacher_id)
-            infos_teacher = self.teacher_controller.get_all_info_teacher(teacher_id)
+            infos_teacher = self.teacher_controller.get_all_info_teacher(
+                teacher_id
+            )
             classes = self.class_controller.get_all_classes()
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
             subjects = self.subject_controller.get_subjects()
 
             teacher = infos_teacher[0]
-            teacher_class_ids = [int(i) for i in teacher['class_ids'].split(',')]
-            teacher_subject_ids = [int(i) for i in teacher['subject_ids'].split(',')]
+            teacher_class_ids = [
+                int(i) for i in teacher["class_ids"].split(",")
+            ]
+            teacher_subject_ids = [
+                int(i) for i in teacher["subject_ids"].split(",")
+            ]
 
             if request.method == "POST":
                 first_name = request.form.get("first_name")
@@ -211,7 +222,7 @@ class AdminViews:
                 options=options,
                 subjects=subjects,
                 teacher_class_ids=teacher_class_ids,
-                teacher_subject_ids=teacher_subject_ids
+                teacher_subject_ids=teacher_subject_ids,
             )
 
         @self.admin_bp.route("/delete_teacher/<teacher_id>", methods=["POST"])

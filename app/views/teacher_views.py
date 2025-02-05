@@ -33,13 +33,17 @@ class TeacherViews:
         def teacher_dashboard():
             teacher_id = session.get("user_id")
             classes = self.teacher_controller.get_teacher_classes(teacher_id)
-            return render_template("teacher/dashboard_teacher.html", classes=classes)
+            return render_template(
+                "teacher/dashboard_teacher.html", classes=classes
+            )
 
         @self.teacher_bp.route("/class/<int:class_id>")
         def class_students(class_id):
             teacher_id = session.get("user_id")
             student_class = self.student_controller.get_student_class(class_id)
-            teacher_classes = self.teacher_controller.get_teacher_classes(teacher_id)
+            teacher_classes = self.teacher_controller.get_teacher_classes(
+                teacher_id
+            )
             subjects = self.teacher_controller.get_subject_by_teacher(
                 session.get("user_id")
             )
@@ -50,12 +54,10 @@ class TeacherViews:
                 classes=teacher_classes,
                 subjects=subjects,
             )
-        
-
 
         @self.teacher_bp.route("/add_grade", methods=["POST"])
-        def add_grade():                                        #TODO: ajouter un coef pour chaque matière
-            teacher_id = session.get("user_id")     
+        def add_grade():  # TODO: ajouter un coef pour chaque matière
+            teacher_id = session.get("user_id")
             student_id = request.form["student_id"]
             subject_id = request.form["subject_id"]
             grade = request.form["grade"]
@@ -75,7 +77,9 @@ class TeacherViews:
         @self.teacher_bp.route("/student/<int:student_id>")
         def student_grades(student_id):
             teacher_id = session.get("user_id")
-            grades = self.teacher_controller.get_student_grades(teacher_id, student_id)
+            grades = self.teacher_controller.get_student_grades(
+                teacher_id, student_id
+            )
             student_info = self.student_controller.get_student_info(student_id)
             class_id = student_info["class_id"]
 

@@ -28,4 +28,4 @@ class UserModel:
         return False
 
     def add_admin(self, username, password):
-        return self.add_user(username, password, role="admin")  
+        return self.add_user(username, password, role="admin")

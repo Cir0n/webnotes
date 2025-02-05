@@ -27,7 +27,6 @@ class TeacherModel:
         teacher_id,
         first_name,
         last_name,
-
     ):
         query = (
             "UPDATE teachers SET first_name = %s, last_name = %s WHERE id = %s"
@@ -38,12 +37,19 @@ class TeacherModel:
         query = "DELETE FROM teacher_class WHERE teacher_id = %s"
         self.db.execute(query, (teacher_id,))
 
-
     def edit_teacher_class_id(self, teacher_id, class_id):
-        query = "INSERT INTO teacher_class (teacher_id, class_id) VALUES (%s, %s)"
+        query = (
+            "INSERT INTO teacher_class (teacher_id, class_id) VALUES (%s, %s)"
+        )
         self.db.execute(query, (teacher_id, class_id))
 
-    def edit_teacher_selected(self, teacher_id, selected_languages, selected_subjects, selected_options):
+    def edit_teacher_selected(
+        self,
+        teacher_id,
+        selected_languages,
+        selected_subjects,
+        selected_options,
+    ):
         query = "DELETE FROM teacher_subject WHERE teacher_id = %s"
         self.db.execute(query, (teacher_id,))
         for language in selected_languages:
@@ -55,7 +61,6 @@ class TeacherModel:
         for option in selected_options:
             query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (teacher_id, option))
-
 
     def get_all_teachers(self):
         query = """
@@ -75,7 +80,7 @@ class TeacherModel:
         query = "SELECT * FROM teachers WHERE id = %s"
         result = self.db.query(query, (teacher_id,))
         return result[0] if result else None
-    
+
     def get_all_info_teacher(self, teacher_id):
         query = """
         SELECT t.id, t.first_name, t.last_name, 
@@ -90,7 +95,6 @@ class TeacherModel:
         GROUP BY t.id
         """
         return self.db.query(query, (teacher_id,))
-
 
     def delete_teacher(self, teacher_id):
         query = "DELETE FROM users WHERE id = %s"

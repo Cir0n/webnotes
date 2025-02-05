@@ -24,7 +24,7 @@ class StudentModel:
         GROUP BY s.id, s.first_name, s.last_name, c.name
         """
         return self.db.query(sql)
-    
+
     def get_all_info_student(self, student_id):
         query = """
         SELECT 
@@ -107,7 +107,7 @@ class StudentModel:
         for option in selected_options:
             query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (user_id, option))
-        
+
         return user_id
 
     def get_student_class(self, class_id):

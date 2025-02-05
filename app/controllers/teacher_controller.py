@@ -42,10 +42,13 @@ class TeacherController:
         self.teacher_model.del_class_from_teacher(teacher_id)
         for class_id in selected_classes:
             self.teacher_model.edit_teacher_class_id(teacher_id, class_id)
-        
+
         if selected_languages:
             self.teacher_model.edit_teacher_selected(
-                teacher_id, selected_languages, selected_subjects, selected_options
+                teacher_id,
+                selected_languages,
+                selected_subjects,
+                selected_options,
             )
 
         return "Success: Teacher updated successfully"

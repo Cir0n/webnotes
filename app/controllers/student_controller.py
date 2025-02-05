@@ -12,7 +12,7 @@ class StudentController:
         if not student:
             return "ERROR: Student not found"
         return student
-    
+
     def get_all_info_student(self, student_id):
         return self.model.get_all_info_student(student_id)
 
@@ -38,7 +38,7 @@ class StudentController:
 
     def list_students(self):
         return self.model.get_all_students()
-    
+
     def get_student_class(self, student_id):
         return self.model.get_student_class(student_id)
 
