@@ -10,7 +10,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username :</label>
-                    {{ form.username(class_="form-control", placeholder="Entrez le nom d'utilisateur") }}
+                    {{ form.username(class_="form-control") }}
                     {% if form.username.errors %}
                         <div class="invalid-feedback">
                             {% for error in form.username.errors %}
@@ -22,7 +22,7 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Mot de passe :</label>
-                    {{ form.password(class_="form-control", placeholder="Entrez le mot de passe") }}
+                    {{ form.password(class_="form-control") }}
                     {% if form.password.errors %}
                         <div class="invalid-feedback">
                             {% for error in form.password.errors %}
@@ -34,7 +34,7 @@
 
                 <div class="mb-3">
                     <label for="first_name" class="form-label">Prénom :</label>
-                    {{ form.first_name(class_="form-control", placeholder="Entrez le prénom") }}
+                    {{ form.first_name(class_="form-control") }}
                     {% if form.first_name.errors %}
                         <div class="invalid-feedback">
                             {% for error in form.first_name.errors %}
@@ -46,7 +46,7 @@
 
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Nom :</label>
-                    {{ form.last_name(class_="form-control", placeholder="Entrez le nom") }}
+                    {{ form.last_name(class_="form-control") }}
                     {% if form.last_name.errors %}
                         <div class="invalid-feedback">
                             {% for error in form.last_name.errors %}

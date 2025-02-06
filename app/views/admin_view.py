@@ -14,7 +14,13 @@ from app.controllers.class_controller import ClassController
 from app.controllers.student_controller import StudentController
 from app.controllers.subject_controller import SubjectController
 from app.controllers.teacher_controller import TeacherController
+
+from app.forms.forms_add_teacher import AddTeacherForm
 from app.forms.forms_add_student import AddStudentForm
+from app.forms.forms_edit_student import EditStudentForm
+from app.forms.forms_edit_teacher import EditTeacherForm
+from app.forms.forms_delete_teacher import DeleteTeacherForm
+from app.forms.forms_delete_student import DeleteStudentForm
 
 
 class AdminViews:
@@ -41,11 +47,13 @@ class AdminViews:
         @self.admin_bp.route("/students")
         def list_students():
             self.require_admin()
+            form = DeleteStudentForm()
             students = self.student_controller.list_students()
             options = self.subject_controller.get_options()
             languages = self.subject_controller.get_languages()
             return render_template(
                 "admin/students.html",
+                form=form,
                 students=students,
                 options=[o["name"] for o in options],
                 languages=[l["name"] for l in languages],
@@ -74,7 +82,7 @@ class AdminViews:
                 selected_languages = form.languages.data
                 selected_options = form.options.data
 
-                result = self.student_controller.create_student(
+                self.student_controller.create_student(
                     username, password, first_name, last_name, class_id, selected_languages, selected_options
                 )
 
@@ -94,7 +102,8 @@ class AdminViews:
         )
         def edit_student(student_id):
             self.require_admin()
-            result = self.student_controller.get_student_info(student_id)
+
+            student = self.student_controller.get_student_info(student_id)
             infos_student = self.student_controller.get_all_info_student(
                 student_id
             )
@@ -102,44 +111,57 @@ class AdminViews:
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
 
+            if not student:
+                flash("Étudiant non trouvé", "error")
+                return redirect(url_for("admin_bp.list_students"))
+
+            form = EditStudentForm()
+
+            form.class_id.choices = [(class_["id"], class_["name"]) for class_ in classes]
+            form.languages.choices = [(lang["id"], lang["name"]) for lang in languages]
+            form.options.choices = [(opt["id"], opt["name"]) for opt in options]
+
+            if request.method == "POST" and form.validate_on_submit():
+                self.student_controller.edit_student(
+                    student_id,
+                    form.first_name.data,
+                    form.last_name.data,
+                    form.class_id.data,
+                    form.languages.data,
+                    form.options.data,
+                )
+                flash("Étudiant modifié avec succès", "success")
+                return redirect(url_for("admin_bp.list_students"))
+
             student = infos_student[0]
-            print(student)
-            student_class_id = student["class_id"]
             student_subject_ids = [
                 int(i) for i in student["subject_ids"].split(",")
             ]
 
-            if request.method == "POST":
-                first_name = request.form.get("first_name")
-                last_name = request.form.get("last_name")
-                class_id = request.form.get("class")
-                selected_languages = request.form.getlist("languages")
-                selected_options = request.form.getlist("options")
-                result = self.student_controller.edit_student(
-                    student_id,
-                    first_name,
-                    last_name,
-                    class_id,
-                    selected_languages,
-                    selected_options,
-                )
-                flash("Etudiant modifié avec succès")
-                return redirect(url_for("admin_bp.list_students"))
+            form.first_name.data = student["first_name"]
+            form.last_name.data = student["last_name"]
+            form.class_id.data = student["class_id"]
+            form.languages.data = list(student_subject_ids)
+            form.options.data = list(student_subject_ids)
+
             return render_template(
                 "admin/edit_student.html",
-                student=result,
-                classes=classes,
+                form=form,
+                student=student,
                 languages=languages,
                 options=options,
-                student_class_id=student_class_id,
-                student_subject_ids=student_subject_ids,
             )
 
         @self.admin_bp.route("/delete_student/<student_id>", methods=["POST"])
         def delete_student(student_id):
             self.require_admin()
-            result = self.student_controller.delete_student(student_id)
-            flash("Etudiant supprimé avec succès")
+            form = DeleteStudentForm()
+
+            if form.validate_on_submit():
+                self.student_controller.delete_student(student_id)
+                flash("Etudiant supprimé avec succès")
+            else:
+                print("Validation échouée :", form.errors)
             return redirect(url_for("admin_bp.list_students"))
 
         # ----------------------------TEACHERS--------------------------------
@@ -147,35 +169,39 @@ class AdminViews:
         @self.admin_bp.route("/teachers")
         def list_teachers():
             self.require_admin()
+            form = DeleteTeacherForm()
             teachers = self.teacher_controller.list_teachers()
-            return render_template("admin/teachers.html", teachers=teachers)
+            return render_template("admin/teachers.html", teachers=teachers, form=form)
 
         @self.admin_bp.route("/add_teacher", methods=["GET", "POST"])
         def add_teacher():
             self.require_admin()
+            
+            form = AddTeacherForm()
+
             subjects = self.subject_controller.get_all_subjects()
             classes = self.class_controller.get_all_classes()
 
-            if request.method == "POST":
-                username = request.form.get("username")
-                password = request.form.get("password")
-                first_name = request.form.get("first_name")
-                last_name = request.form.get("last_name")
-                selected_classes = request.form.getlist("classes")
-                selected_subjects = request.form.getlist("subjects")
+            form.classes.choices = [(class_["id"], class_["name"]) for class_ in classes]
+            form.subjects.choices = [(subject["id"], subject["name"]) for subject in subjects]
+
+            if form.validate_on_submit():  
+                username = form.username.data
+                password = form.password.data
+                first_name = form.first_name.data
+                last_name = form.last_name.data
+                selected_classes = form.classes.data  
+                selected_subjects = form.subjects.data  
+
                 result = self.teacher_controller.create_teacher(
-                    username,
-                    password,
-                    first_name,
-                    last_name,
-                    selected_classes,
-                    selected_subjects,
+                    username, password, first_name, last_name, selected_classes, selected_subjects
                 )
+
                 flash(result)
                 return redirect(url_for("admin_bp.list_teachers"))
 
             return render_template(
-                "admin/add_teacher.html", subjects=subjects, classes=classes
+                "admin/add_teacher.html", form=form, subjects=subjects, classes=classes
             )
 
         @self.admin_bp.route(
@@ -183,45 +209,54 @@ class AdminViews:
         )
         def edit_teacher(teacher_id):
             self.require_admin()
-            result = self.teacher_controller.get_teacher(teacher_id)
-            infos_teacher = self.teacher_controller.get_all_info_teacher(
-                teacher_id
-            )
+
+            teacher = self.teacher_controller.get_teacher(teacher_id)
+            infos_teacher = self.teacher_controller.get_all_info_teacher(teacher_id)
+
+            if not teacher:
+                flash("Enseignant non trouvé", "error")
+                return redirect(url_for("admin_bp.list_teachers"))
+
             classes = self.class_controller.get_all_classes()
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
             subjects = self.subject_controller.get_subjects()
 
-            teacher = infos_teacher[0]
-            teacher_class_ids = [
-                int(i) for i in teacher["class_ids"].split(",")
-            ]
-            teacher_subject_ids = [
-                int(i) for i in teacher["subject_ids"].split(",")
-            ]
+            form = EditTeacherForm()
 
-            if request.method == "POST":
-                first_name = request.form.get("first_name")
-                last_name = request.form.get("last_name")
-                selected_classes = request.form.getlist("class")
-                selected_languages = request.form.getlist("languages")
-                selected_subjects = request.form.getlist("subjects")
-                selected_options = request.form.getlist("options")
+            form.classes.choices = [(class_["id"], class_["name"]) for class_ in classes]
+            form.languages.choices = [(lang["id"], lang["name"]) for lang in languages]
+            form.options.choices = [(opt["id"], opt["name"]) for opt in options]
+            form.subjects.choices = [(subject["id"], subject["name"]) for subject in subjects]
+
+            if form.validate_on_submit():
                 self.teacher_controller.edit_teacher(
                     teacher_id,
-                    first_name,
-                    last_name,
-                    selected_classes,
-                    selected_languages,
-                    selected_options,
-                    selected_subjects,
+                    form.first_name.data,
+                    form.last_name.data,
+                    form.classes.data,
+                    form.languages.data,
+                    form.options.data,
+                    form.subjects.data,
                 )
-                flash("Enseignant modifié avec succès")
+                flash("Enseignant modifié avec succès", "success")
                 return redirect(url_for("admin_bp.list_teachers"))
+
+            teacher = infos_teacher[0]
+            teacher_class_ids = [int(i) for i in teacher["class_ids"].split(",")]
+            teacher_subject_ids = [int(i) for i in teacher["subject_ids"].split(",")]
+
+            form.first_name.data = teacher["first_name"]
+            form.last_name.data = teacher["last_name"]
+            form.classes.data = teacher_class_ids
+            form.languages.data = teacher_subject_ids
+            form.options.data = teacher_subject_ids
+            form.subjects.data = teacher_subject_ids
+
             return render_template(
                 "admin/edit_teacher.html",
-                teacher=result,
-                infos_teacher=infos_teacher,
+                form=form,
+                teacher=teacher,
                 classes=classes,
                 languages=languages,
                 options=options,
@@ -233,6 +268,11 @@ class AdminViews:
         @self.admin_bp.route("/delete_teacher/<teacher_id>", methods=["POST"])
         def delete_teacher(teacher_id):
             self.require_admin()
-            result = self.teacher_controller.delete_teacher(teacher_id)
-            flash("Enseignant supprimé avec succès")
+            form = DeleteTeacherForm() 
+
+            if form.validate_on_submit():   
+                self.teacher_controller.delete_teacher(teacher_id)  
+                flash("Enseignant supprimé avec succès")
+            else:
+                print("Validation échouée :", form.errors)
             return redirect(url_for("admin_bp.list_teachers"))

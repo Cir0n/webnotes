@@ -27,6 +27,8 @@
                     <a href="{{ url_for('admin_bp.edit_teacher', teacher_id=teacher.id) }}" class="btn btn-warning btn-sm">Modifier</a>
 
                     <form action="{{ url_for('admin_bp.delete_teacher', teacher_id=teacher.id) }}" method="POST" class="d-inline">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="teacher_id" value="{{ teacher.id }}">
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
                     </form>
                 </td>

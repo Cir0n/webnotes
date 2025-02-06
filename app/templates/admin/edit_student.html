@@ -2,58 +2,85 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Editer un Étudiant</h2>
+    <h2>Éditer un Étudiant</h2>
 
-    <form action="{{ url_for('admin_bp.edit_student', student_id = student.id) }}" method="POST">
+    <form action="{{ url_for('admin_bp.edit_student', student_id=student.id) }}" method="POST">
+        {{ form.hidden_tag() }}
+
         <div class="row">
             <div class="col-md-6">
-
                 <div class="mb-3">
                     <label for="first_name" class="form-label">Prénom :</label>
-                    <input type="text" name="first_name" id="first_name" class="form-control" required
-                        value="{{ student.first_name }}">
+                    {{ form.first_name(class_="form-control", required=True) }}
+                    {% if form.first_name.errors %}
+                        <div class="text-danger">
+                            {% for error in form.first_name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Nom :</label>
-                    <input type="text" name="last_name" id="last_name" class="form-control" required
-                        value="{{ student.last_name }}">
+                    {{ form.last_name(class_="form-control", required=True) }}
+                    {% if form.last_name.errors %}
+                        <div class="text-danger">
+                            {% for error in form.last_name.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Classe :</label>
-                    {% for class_ in classes %}
+                    {% for subfield in form.class_id %}
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="class" value="{{ class_['id'] }}" required
-                                {% if class_.id == student_class_id %}checked{% endif %}>
-                            <label class="form-check-label">{{ class_.name }}</label>
+                            {{ subfield(class_="form-check-input") }}
+                            <label class="form-check-label">{{ subfield.label.text }}</label>
                         </div>
                     {% endfor %}
+                    {% if form.class_id.errors %}
+                        <div class="text-danger">
+                            {% for error in form.class_id.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Langues :</label>
                     {% for language in languages %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="languages" value="{{ language['id'] }}"
-                                {% if language.id in student_subject_ids %}checked{% endif %}>
-                            <label class="form-check-label">{{ language.name }}</label>
+                            <input class="form-check-input" type="checkbox" 
+                                   name="languages" 
+                                   value="{{ language['id'] }}" 
+                                   id="language_{{ language['id'] }}"
+                                   {% if language['id'] in form.languages.data %}checked{% endif %}>
+                            <label class="form-check-label" for="language_{{ language['id'] }}">{{ language['name'] }}</label>
                         </div>
                     {% endfor %}
                 </div>
-
+                
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Options :</label>
                     {% for option in options %}
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="options" value="{{ option['id'] }}"
-                                {% if option.id in student_subject_ids %}checked{% endif %}>
-                            <label class="form-check-label">{{ option.name }}</label>
+                            <input class="form-check-input" type="checkbox" 
+                                   name="options" 
+                                   value="{{ option['id'] }}" 
+                                   id="option_{{ option['id'] }}"
+                                   {% if option['id'] in form.options.data %}checked{% endif %}>
+                            <label class="form-check-label" for="option_{{ option['id'] }}">{{ option['name'] }}</label>
                         </div>
                     {% endfor %}
                 </div>
+                
+                
             </div>
         </div>
 

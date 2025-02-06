@@ -57,6 +57,8 @@
 
                     <!-- Bouton Supprimer -->
                     <form action="{{ url_for('admin_bp.delete_student', student_id=student.id) }}" method="POST" class="d-inline">
+                        {{ form.hidden_tag() }}
+                        <input type="hidden" name="student_id" value="{{ student.id }}">
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
                     </form>
                 </td>

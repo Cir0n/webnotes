@@ -14,11 +14,11 @@
             {{ form.hidden_tag() }}
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
-                {{ form.username(class_="form-control", placeholder="Entrez votre nom d'utilisateur") }}
+                {{ form.username(class_="form-control") }}
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
-                {{ form.password(class_="form-control", placeholder="Entrez votre mot de passe") }}
+                {{ form.password(class_="form-control") }}
             </div>
             <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
