@@ -104,7 +104,7 @@ class StudentModel:
         for language in selected_languages:
             self.db.execute(query, (user_id, language))
 
-        for option in selected_options:   
+        for option in selected_options:
             self.db.execute(query, (user_id, option))
 
         return user_id

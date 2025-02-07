@@ -21,7 +21,7 @@ class AuthViews:
 
         @self.auth_bp.route("/login", methods=["GET", "POST"])
         def login():
-            form = LoginForm() 
+            form = LoginForm()
 
             if request.method == "POST" and form.validate_on_submit():
                 username = form.username.data
@@ -29,7 +29,9 @@ class AuthViews:
                 result = self.controller.login(username, password)
 
                 if "error" in result:
-                    return render_template("auth/login.html", form=form, message=result["error"])
+                    return render_template(
+                        "auth/login.html", form=form, message=result["error"]
+                    )
 
                 if result["role"] == "student":
                     return redirect(url_for("student_bp.student_dashboard"))
@@ -40,8 +42,7 @@ class AuthViews:
 
                 return redirect("/profile")
 
-            return render_template("auth/login.html", form=form) 
-        
+            return render_template("auth/login.html", form=form)
 
         @self.auth_bp.route("/logout")
         def logout():

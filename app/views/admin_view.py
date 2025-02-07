@@ -9,7 +9,6 @@ from flask import (
 )
 
 
-
 from app.controllers.class_controller import ClassController
 from app.controllers.student_controller import StudentController
 from app.controllers.subject_controller import SubjectController
@@ -30,7 +29,7 @@ class AdminViews:
         self.subject_controller = SubjectController()
         self.class_controller = ClassController()
         self.teacher_controller = TeacherController()
-        
+
         self.register_routes()
 
     def require_admin(self):
@@ -55,8 +54,8 @@ class AdminViews:
                 "admin/students.html",
                 form=form,
                 students=students,
-                options=[o["name"] for o in options],
-                languages=[l["name"] for l in languages],
+                options=[option["name"] for option in options],
+                languages=[language["name"] for language in languages],
             )
 
         @self.admin_bp.route("/add_student", methods=["GET", "POST"])
@@ -69,9 +68,15 @@ class AdminViews:
             languages = self.subject_controller.get_languages()
             options = self.subject_controller.get_options()
 
-            form.class_id.choices = [(class_['id'], class_['name']) for class_ in classes]
-            form.languages.choices = [(language['id'], language['name']) for language in languages]
-            form.options.choices = [(option['id'], option['name']) for option in options]
+            form.class_id.choices = [
+                (class_["id"], class_["name"]) for class_ in classes
+            ]
+            form.languages.choices = [
+                (language["id"], language["name"]) for language in languages
+            ]
+            form.options.choices = [
+                (option["id"], option["name"]) for option in options
+            ]
 
             if request.method == "POST" and form.validate_on_submit():
                 username = form.username.data
@@ -83,7 +88,13 @@ class AdminViews:
                 selected_options = form.options.data
 
                 self.student_controller.create_student(
-                    username, password, first_name, last_name, class_id, selected_languages, selected_options
+                    username,
+                    password,
+                    first_name,
+                    last_name,
+                    class_id,
+                    selected_languages,
+                    selected_options,
                 )
 
                 flash("Étudiant ajouté avec succès", "success")
@@ -117,9 +128,15 @@ class AdminViews:
 
             form = EditStudentForm()
 
-            form.class_id.choices = [(class_["id"], class_["name"]) for class_ in classes]
-            form.languages.choices = [(lang["id"], lang["name"]) for lang in languages]
-            form.options.choices = [(opt["id"], opt["name"]) for opt in options]
+            form.class_id.choices = [
+                (class_["id"], class_["name"]) for class_ in classes
+            ]
+            form.languages.choices = [
+                (lang["id"], lang["name"]) for lang in languages
+            ]
+            form.options.choices = [
+                (opt["id"], opt["name"]) for opt in options
+            ]
 
             if request.method == "POST" and form.validate_on_submit():
                 self.student_controller.edit_student(
@@ -171,37 +188,51 @@ class AdminViews:
             self.require_admin()
             form = DeleteTeacherForm()
             teachers = self.teacher_controller.list_teachers()
-            return render_template("admin/teachers.html", teachers=teachers, form=form)
+            return render_template(
+                "admin/teachers.html", teachers=teachers, form=form
+            )
 
         @self.admin_bp.route("/add_teacher", methods=["GET", "POST"])
         def add_teacher():
             self.require_admin()
-            
+
             form = AddTeacherForm()
 
             subjects = self.subject_controller.get_all_subjects()
             classes = self.class_controller.get_all_classes()
 
-            form.classes.choices = [(class_["id"], class_["name"]) for class_ in classes]
-            form.subjects.choices = [(subject["id"], subject["name"]) for subject in subjects]
+            form.classes.choices = [
+                (class_["id"], class_["name"]) for class_ in classes
+            ]
+            form.subjects.choices = [
+                (subject["id"], subject["name"]) for subject in subjects
+            ]
 
-            if form.validate_on_submit():  
+            if form.validate_on_submit():
                 username = form.username.data
                 password = form.password.data
                 first_name = form.first_name.data
                 last_name = form.last_name.data
-                selected_classes = form.classes.data  
-                selected_subjects = form.subjects.data  
+                selected_classes = form.classes.data
+                selected_subjects = form.subjects.data
 
                 result = self.teacher_controller.create_teacher(
-                    username, password, first_name, last_name, selected_classes, selected_subjects
+                    username,
+                    password,
+                    first_name,
+                    last_name,
+                    selected_classes,
+                    selected_subjects,
                 )
 
                 flash(result)
                 return redirect(url_for("admin_bp.list_teachers"))
 
             return render_template(
-                "admin/add_teacher.html", form=form, subjects=subjects, classes=classes
+                "admin/add_teacher.html",
+                form=form,
+                subjects=subjects,
+                classes=classes,
             )
 
         @self.admin_bp.route(
@@ -211,7 +242,9 @@ class AdminViews:
             self.require_admin()
 
             teacher = self.teacher_controller.get_teacher(teacher_id)
-            infos_teacher = self.teacher_controller.get_all_info_teacher(teacher_id)
+            infos_teacher = self.teacher_controller.get_all_info_teacher(
+                teacher_id
+            )
 
             if not teacher:
                 flash("Enseignant non trouvé", "error")
@@ -224,10 +257,18 @@ class AdminViews:
 
             form = EditTeacherForm()
 
-            form.classes.choices = [(class_["id"], class_["name"]) for class_ in classes]
-            form.languages.choices = [(lang["id"], lang["name"]) for lang in languages]
-            form.options.choices = [(opt["id"], opt["name"]) for opt in options]
-            form.subjects.choices = [(subject["id"], subject["name"]) for subject in subjects]
+            form.classes.choices = [
+                (class_["id"], class_["name"]) for class_ in classes
+            ]
+            form.languages.choices = [
+                (lang["id"], lang["name"]) for lang in languages
+            ]
+            form.options.choices = [
+                (opt["id"], opt["name"]) for opt in options
+            ]
+            form.subjects.choices = [
+                (subject["id"], subject["name"]) for subject in subjects
+            ]
 
             if form.validate_on_submit():
                 self.teacher_controller.edit_teacher(
@@ -243,8 +284,12 @@ class AdminViews:
                 return redirect(url_for("admin_bp.list_teachers"))
 
             teacher = infos_teacher[0]
-            teacher_class_ids = [int(i) for i in teacher["class_ids"].split(",")]
-            teacher_subject_ids = [int(i) for i in teacher["subject_ids"].split(",")]
+            teacher_class_ids = [
+                int(i) for i in teacher["class_ids"].split(",")
+            ]
+            teacher_subject_ids = [
+                int(i) for i in teacher["subject_ids"].split(",")
+            ]
 
             form.first_name.data = teacher["first_name"]
             form.last_name.data = teacher["last_name"]
@@ -268,10 +313,10 @@ class AdminViews:
         @self.admin_bp.route("/delete_teacher/<teacher_id>", methods=["POST"])
         def delete_teacher(teacher_id):
             self.require_admin()
-            form = DeleteTeacherForm() 
+            form = DeleteTeacherForm()
 
-            if form.validate_on_submit():   
-                self.teacher_controller.delete_teacher(teacher_id)  
+            if form.validate_on_submit():
+                self.teacher_controller.delete_teacher(teacher_id)
                 flash("Enseignant supprimé avec succès")
             else:
                 print("Validation échouée :", form.errors)
