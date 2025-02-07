@@ -116,3 +116,5 @@ class TeacherModel:
         WHERE ts.teacher_id = %s
         """
         return self.db.query(query, (teacher_id,))
+
+    

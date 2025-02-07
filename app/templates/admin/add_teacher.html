@@ -4,6 +4,23 @@
 <div class="container mt-4">
     <h2 class="mb-4">Ajouter un Professeur</h2>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show mt-3" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+        {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% endif %}
+
     <form action="{{ url_for('admin_bp.add_teacher') }}" method="POST">
         {{ form.hidden_tag() }}
 
@@ -59,5 +76,33 @@
             <a href="{{ url_for('admin_bp.list_teachers') }}" class="btn btn-secondary px-4">Annuler</a>
         </div>
     </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const subjectsCheckboxes = document.querySelectorAll("input[name='subjects']");
+            const subjectError = document.createElement("div");
+    
+            subjectError.classList.add("alert", "alert-danger", "mt-2", "d-none");
+            subjectError.innerText = "❌ Vous devez sélectionner au moins une matière.";
+            form.insertBefore(subjectError, form.firstChild);
+    
+            form.addEventListener("submit", function (event) {
+                let atLeastOneChecked = false;
+    
+                // Vérifie si au moins une matière est cochée
+                subjectsCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        atLeastOneChecked = true;
+                    }
+                });
+    
+                if (!atLeastOneChecked) {
+                    event.preventDefault();  // Bloque temporairement l'envoi
+                    subjectError.classList.remove("d-none");  // Affiche le message d'erreur
+                }
+            });
+        });
+    </script>
+    
 </div>
 {% endblock %}

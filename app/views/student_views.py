@@ -12,8 +12,9 @@ class StudentViews:
         self.register_routes()
 
     def register_routes(self):
+
         @self.student_bp.route("/me")
-        def student_dashboard():
+        def student_dashboard():                            #TODO: Revoir les infos présente dans le dashboard peut être ajouter un emploie du temps etc...
             student_id = session.get("user_id")
             student = self.studentController.get_student_info(student_id)
             class_student = self.classController.get_one_class(
