@@ -8,7 +8,7 @@ class AddTeacherForm(FlaskForm):
     first_name = StringField('Prénom', validators=[DataRequired(), Length(min=2, max=50)])
     last_name = StringField('Nom', validators=[DataRequired(), Length(min=2, max=50)])
 
-    classes = SelectMultipleField('Classes',choices=[], coerce=int)  # Gère plusieurs classes
-    subjects = SelectMultipleField('Matières',choices=[] ,coerce=int)  # Gère plusieurs matières
+    classes = SelectMultipleField('Classes',choices=[], coerce=int)
+    subjects = SelectMultipleField('Matières',choices=[] ,coerce=int)
 
     submit = SubmitField('Ajouter un professeur')
