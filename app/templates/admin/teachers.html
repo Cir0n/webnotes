@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Liste des Professeurs</h2>
+    <a href="{{ url_for('admin_bp.add_teacher') }}" class="btn btn-success mb-3">Ajouter un Professeur</a>
+
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Classes</th>
+                <th>Matières</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teachers %}
+            <tr>
+                <td>{{ teacher.id }}</td>
+                <td>{{ teacher.first_name }} {{ teacher.last_name }}</td>
+                <td>{{ teacher.classes if teacher.classes else "Aucune classe assignée" }}</td>
+                <td>{{ teacher.subjects if teacher.subjects else "Aucune matière assignée" }}</td>
+                <td>
+                    <form action="{{ url_for('admin_bp.delete_teacher', teacher_id=teacher.id) }}" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

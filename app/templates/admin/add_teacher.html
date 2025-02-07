@@ -1,0 +1,101 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Ajouter un Professeur</h2>
+
+        {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('admin_bp.add_teacher') }}" method="POST">
+        <div class="row">
+            <!-- Colonne 1 : Informations générales -->
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nom d'utilisateur :</label>
+                    <input type="text" name="username" id="username" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe :</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">Prénom :</label>
+                    <input type="text" name="first_name" id="first_name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Nom :</label>
+                    <input type="text" name="last_name" id="last_name" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Colonne 2 : Sélection des Classes et Matières -->
+            <div class="col-md-6">
+                <div class="mb-3 border p-3 rounded">
+                    <label for="classes" class="form-label fw-bold">Classes :</label>
+                    {% for class_ in classes %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="classes" value="{{ class_['id'] }}" id="class{{ class_['id'] }}">
+                            <label class="form-check-label" for="class{{ class_['id'] }}">
+                                {{ class_['name'] }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3 border p-3 rounded">
+                    <label for="subjects" class="form-label fw-bold">Matières :</label>
+                    {% for subject in subjects %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="subjects" value="{{ subject['id'] }}" id="subject{{ subject['id'] }}">
+                            <label class="form-check-label" for="subject{{ subject['id'] }}">
+                                {{ subject['name'] }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-primary px-4">Ajouter le Professeur</button>
+            <a href="{{ url_for('admin_bp.list_teachers') }}" class="btn btn-secondary px-4">Annuler</a>
+        </div>
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const subjectsCheckboxes = document.querySelectorAll("input[name='subjects']");
+            const subjectError = document.createElement("div");
+    
+            subjectError.classList.add("alert", "alert-danger", "mt-2", "d-none");
+            subjectError.innerText = "❌ Vous devez sélectionner au moins une matière.";
+            form.insertBefore(subjectError, form.firstChild);
+    
+            form.addEventListener("submit", function (event) {
+                let atLeastOneChecked = false;
+    
+                // Vérifie si au moins une matière est cochée
+                subjectsCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        atLeastOneChecked = true;
+                    }
+                });
+    
+                if (!atLeastOneChecked) {
+                    event.preventDefault();  // Bloque temporairement l'envoi
+                    subjectError.classList.remove("d-none");  // Affiche le message d'erreur
+                }
+            });
+        });
+    </script>
+    
+</div>
+{% endblock %}

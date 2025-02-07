@@ -1,0 +1,29 @@
+{% extends "teacher/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">📚 Mes Classes</h2>
+
+    {% if classes and classes|length > 0 %}
+        <div class="row">
+            {% for classe in classes %}
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow-sm">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ classe.name }}</h5>
+                            <a href="{{ url_for('teacher_bp.class_students', class_id=classe.id) }}" 
+                               class="btn btn-primary mt-2">
+                                📖 Voir les étudiants
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            ❌ Vous n'enseignez actuellement aucune classe.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

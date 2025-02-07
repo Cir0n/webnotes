@@ -1,0 +1,23 @@
+{% extends "errors/base.html" %}
+
+{% block title %}Accès Refusé{% endblock %}
+
+{% block content %}
+<h1 class="text-danger">🚨 Hop hop hop !</h1>
+<p class="lead">Vous n'avez rien à faire ici.</p>
+
+{% if role == "student" %}
+    <a href="{{ url_for('student_bp.student_dashboard') }}" class="btn btn-primary mt-3">
+        🔙 Retour au Dashboard Étudiant
+    </a>
+{% elif role == "teacher" %}
+    <a href="{{ url_for('teacher_bp.teacher_dashboard') }}" class="btn btn-warning mt-3">
+        📚 Retour au Dashboard Professeur
+    </a>
+{% else %}
+    <a href="{{ url_for('auth_bp.login') }}" class="btn btn-secondary mt-3">
+        🔑 Retour à la Connexion
+    </a>
+{% endif %}
+
+{% endblock %}

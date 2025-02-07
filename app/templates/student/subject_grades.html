@@ -1,0 +1,40 @@
+{% extends "student/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">📖 Notes en {{ subject.name }}</h2>
+
+    {% if grades %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Note</th>
+                        <th>Commentaire</th>
+                        <th>Professeur</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades %}
+                        <tr>
+                            <td class="fw-bold">{{ grade.grade }}/20</td>
+                            <td>{{ grade.comment }}</td>
+                            <td>{{ grade.teacher_name }}</td>
+                            <td>{{ grade.date_added }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="alert alert-warning text-center">⚠️ Aucune note disponible pour cette matière.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('student_bp.student_dashboard') }}" class="btn btn-secondary">
+            🔙 Retour au Tableau de Bord
+        </a>
+    </div>
+</div>
+{% endblock %}

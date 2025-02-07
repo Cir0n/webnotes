@@ -1,0 +1,64 @@
+{% extends "student/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">🎓 Mon Tableau de Bord</h2>
+
+    <!-- Affichage des matières -->
+    <h4 class="mt-4">📚 Mes Matières</h4>
+    <ul class="list-group">
+        {% for subject in subjects %}
+            <li class="list-group-item d-flex justify-content-between align-items-center subject-item">
+                <a href="{{ url_for('student_bp.student_subject_grades', subject_id=subject.id) }}" class="text-decoration-none text-dark w-100">
+                    {{ subject.name }}
+                </a>
+                <span class="badge bg-primary">{{ subject.type }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Affichage des notes -->
+    <h4 class="mt-4">📝 Mes Notes</h4>
+    {% if grades %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Matière</th>
+                        <th>Note</th>
+                        <th>Commentaire</th>
+                        <th>Professeur</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades %}
+                        <tr>
+                            <td>{{ grade.subject_name }}</td>
+                            <td class="fw-bold">{{ grade.grade }}/20</td>
+                            <td>{{ grade.comment }}</td>
+                            <td>{{ grade.teacher_name }}</td>
+                            <td>{{ grade.date_added }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="alert alert-warning text-center">⚠️ Aucune note disponible.</p>
+    {% endif %}
+</div>
+
+<!-- Ajout du CSS pour l'effet hover -->
+<style>
+    .subject-item {
+        transition: background-color 0.3s ease-in-out;
+    }
+    
+    .subject-item:hover {
+        background-color: #e3f2fd; /* Bleu clair */
+        cursor: pointer;
+    }
+</style>
+
+{% endblock %}

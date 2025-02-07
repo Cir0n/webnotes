@@ -1,0 +1,76 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Ajouter un Étudiant</h2>
+
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form action="{{ url_for('admin_bp.add_student') }}" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username :</label>
+                    <input type="username" name="username" id="username" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe :</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">Prénom :</label>
+                    <input type="text" name="first_name" id="first_name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Nom :</label>
+                    <input type="text" name="last_name" id="last_name" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3 border p-3 rounded">
+                    <label class="form-label fw-bold">Classe :</label>
+                    {% for class_ in classes %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="class" value="{{ class_['id'] }}" required>
+                            <label class="form-check-label">{{ class_['name'] }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3 border p-3 rounded">
+                    <label class="form-label fw-bold">Langues :</label>
+                    {% for language in languages %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="languages" value="{{ language['id'] }}">
+                            <label class="form-check-label">{{ language['name'] }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3 border p-3 rounded">
+                    <label class="form-label fw-bold">Options :</label>
+                    {% for option in options %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="options" value="{{ option['id'] }}">
+                            <label class="form-check-label">{{ option['name'] }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <button type="submit" class="btn btn-primary px-4">Ajouter</button>
+            <a href="{{ url_for('admin_bp.list_students') }}" class="btn btn-secondary px-4">Annuler</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
