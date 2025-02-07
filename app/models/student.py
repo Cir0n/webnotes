@@ -66,16 +66,15 @@ class StudentModel:
         )
         principal_subjects = self.db.query(sql_principal_subject)
 
+        query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+
         for subject in principal_subjects:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (student_id, subject["id"]))
 
         for language in selected_languages:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (student_id, language))
 
         for option in selected_options:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (student_id, option))
 
     def create_student(
@@ -100,12 +99,12 @@ class StudentModel:
                      VALUES (%s, %s)"""
             self.db.execute(query, (user_id, subject["id"]))
 
+        query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+
         for language in selected_languages:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (user_id, language))
 
-        for option in selected_options:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+        for option in selected_options:   
             self.db.execute(query, (user_id, option))
 
         return user_id
