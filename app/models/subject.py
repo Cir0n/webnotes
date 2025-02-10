@@ -14,13 +14,16 @@ class SubjectModel:
         return self.db.query(sql)
 
     def get_subjects(self):
-        sql = "SELECT id, name FROM subjects WHERE type = 'principal' ORDER BY name ASC"
+        sql = """SELECT id, name FROM subjects WHERE type = 'principal'
+        ORDER BY name ASC"""
         return self.db.query(sql)
 
     def get_languages(self):
-        sql = "SELECT id, name FROM subjects WHERE type = 'language' ORDER BY name ASC"
+        sql = """SELECT id, name FROM subjects WHERE type = 'language'
+        ORDER BY name ASC"""
         return self.db.query(sql)
 
     def get_options(self):
-        sql = "SELECT id, name FROM subjects WHERE type = 'option' ORDER BY name ASC"
+        sql = """SELECT id, name FROM subjects WHERE type = 'option'
+        ORDER BY name ASC"""
         return self.db.query(sql)

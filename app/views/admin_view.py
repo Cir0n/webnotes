@@ -8,18 +8,16 @@ from flask import (
     url_for,
 )
 
-
 from app.controllers.class_controller import ClassController
 from app.controllers.student_controller import StudentController
 from app.controllers.subject_controller import SubjectController
 from app.controllers.teacher_controller import TeacherController
-
-from app.forms.forms_add_teacher import AddTeacherForm
 from app.forms.forms_add_student import AddStudentForm
+from app.forms.forms_add_teacher import AddTeacherForm
+from app.forms.forms_delete_student import DeleteStudentForm
+from app.forms.forms_delete_teacher import DeleteTeacherForm
 from app.forms.forms_edit_student import EditStudentForm
 from app.forms.forms_edit_teacher import EditTeacherForm
-from app.forms.forms_delete_teacher import DeleteTeacherForm
-from app.forms.forms_delete_student import DeleteStudentForm
 
 
 class AdminViews:

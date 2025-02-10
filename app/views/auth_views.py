@@ -7,9 +7,8 @@ from flask import (
     url_for,
 )
 
-from app.forms.forms_auth import LoginForm
 from app.controllers.auth_controller import AuthController
-
+from app.forms.forms_auth import LoginForm
 
 
 class AuthViews:
@@ -19,7 +18,6 @@ class AuthViews:
         self.register_routes()
 
     def register_routes(self):
-
         @self.auth_bp.route("/login", methods=["GET", "POST"])
         def login():
             form = LoginForm()
@@ -53,5 +51,6 @@ class AuthViews:
         @self.auth_bp.route("/profile")
         def profile():
             if "user_id" in session:
-                return f"User {session['user_id']} is logged in as {session['role']}"
+                return f"""User {session["user_id"]} is logged in
+                as {session["role"]}"""
             return "No user logged in"

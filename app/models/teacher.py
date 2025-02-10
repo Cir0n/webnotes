@@ -8,17 +8,20 @@ class TeacherModel:
     def create_teacher(
         self, user_id, first_name, last_name, class_ids, subject_ids
     ):
-        query = "INSERT INTO teachers ( id, first_name, last_name) VALUES (%s, %s, %s)"
+        query = """INSERT INTO teachers ( id, first_name, last_name)
+        VALUES (%s, %s, %s)"""
         self.db.execute(query, (user_id, first_name, last_name))
 
         if class_ids:
             for class_id in class_ids:
-                query = "INSERT INTO teacher_class (teacher_id, class_id) VALUES (%s, %s)"
+                query = """INSERT INTO teacher_class (teacher_id, class_id)
+                VALUES (%s, %s)"""
                 self.db.execute(query, (user_id, class_id))
 
         if subject_ids:
             for subject_id in subject_ids:
-                query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
+                query = """INSERT INTO teacher_subject (teacher_id, subject_id)
+                VALUES (%s, %s)"""
                 self.db.execute(query, (user_id, subject_id))
         return user_id
 
@@ -52,18 +55,18 @@ class TeacherModel:
     ):
         query = "DELETE FROM teacher_subject WHERE teacher_id = %s"
         self.db.execute(query, (teacher_id,))
-        query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
+        query = """INSERT INTO teacher_subject (teacher_id, subject_id)
+        VALUES (%s, %s)"""
         for language in selected_languages:
             self.db.execute(query, (teacher_id, language))
         for subject in selected_subjects:
             self.db.execute(query, (teacher_id, subject))
         for option in selected_options:
-
             self.db.execute(query, (teacher_id, option))
 
     def get_all_teachers(self):
         query = """
-        SELECT t.id, t.first_name, t.last_name, 
+        SELECT t.id, t.first_name, t.last_name,
             GROUP_CONCAT(DISTINCT c.name SEPARATOR ', ') AS classes,
             GROUP_CONCAT(DISTINCT s.name SEPARATOR ', ') AS subjects
         FROM teachers t
@@ -82,7 +85,7 @@ class TeacherModel:
 
     def get_all_info_teacher(self, teacher_id):
         query = """
-        SELECT t.id, t.first_name, t.last_name, 
+        SELECT t.id, t.first_name, t.last_name,
             GROUP_CONCAT(DISTINCT c.id SEPARATOR ',') AS class_ids,
             GROUP_CONCAT(DISTINCT s.id SEPARATOR ',') AS subject_ids
         FROM teachers t
@@ -116,5 +119,3 @@ class TeacherModel:
         WHERE ts.teacher_id = %s
         """
         return self.db.query(query, (teacher_id,))
-
-    

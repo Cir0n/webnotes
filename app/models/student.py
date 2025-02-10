@@ -6,7 +6,7 @@ class StudentModel:
         self.db = Database()
 
     def get_student_by_id(self, student_id):
-        query = """SELECT id, first_name, last_name, class_id FROM students 
+        query = """SELECT id, first_name, last_name, class_id FROM students
                     WHERE id = %s"""
         result = self.db.query(
             query, (student_id,)
@@ -27,10 +27,10 @@ class StudentModel:
 
     def get_all_info_student(self, student_id):
         query = """
-        SELECT 
-        s.id, 
-        s.first_name, 
-        s.last_name, 
+        SELECT
+        s.id,
+        s.first_name,
+        s.last_name,
         s.class_id AS class_id,  -- Un élève appartient à une seule classe
         GROUP_CONCAT(DISTINCT sub.id SEPARATOR ',') AS subject_ids
         FROM students s
@@ -38,7 +38,6 @@ class StudentModel:
         LEFT JOIN subjects sub ON ss.subject_id = sub.id
         WHERE s.id = %s
         GROUP BY s.id, s.first_name, s.last_name, s.class_id;
-
         """
         return self.db.query(query, (student_id,))
 
@@ -52,7 +51,7 @@ class StudentModel:
         selected_options,
     ):
         query = """
-            UPDATE students 
+            UPDATE students
             SET first_name = %s, last_name = %s, class_id = %s
             WHERE id = %s
         """
@@ -66,7 +65,8 @@ class StudentModel:
         )
         principal_subjects = self.db.query(sql_principal_subject)
 
-        query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+        query = """INSERT INTO student_subject (student_id, subject_id)
+        VALUES (%s, %s)"""
 
         for subject in principal_subjects:
             self.db.execute(query, (student_id, subject["id"]))
@@ -86,7 +86,8 @@ class StudentModel:
         selected_languages,
         selected_options,
     ):
-        query = "INSERT INTO students ( id, first_name, last_name, class_id) VALUES (%s, %s, %s, %s)"
+        query = """INSERT INTO students ( id, first_name, last_name, class_id)
+        VALUES (%s, %s, %s, %s)"""
         self.db.execute(query, (user_id, first_name, last_name, class_id))
 
         sql_principal_subject = (
@@ -99,7 +100,8 @@ class StudentModel:
                      VALUES (%s, %s)"""
             self.db.execute(query, (user_id, subject["id"]))
 
-        query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+        query = """INSERT INTO student_subject (student_id, subject_id)
+        VALUES (%s, %s)"""
 
         for language in selected_languages:
             self.db.execute(query, (user_id, language))
@@ -129,7 +131,7 @@ class StudentModel:
         WHERE ss.student_id = %s
         """
         return self.db.query(query, (student_id,))
-    
+
     def get_subject_by_id(self, subject_id):
         query = "SELECT id, name, type FROM subjects WHERE id = %s"
         result = self.db.query(query, (subject_id,))

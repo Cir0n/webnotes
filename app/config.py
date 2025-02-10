@@ -13,6 +13,7 @@ class Config:
     DB_NAME = os.getenv('DB_NAME')
     SECRET_KEY = os.getenv('SECRET_KEY')
 
+
 class Database:
     def __init__(self):
         self.connection = mysql.connector.connect(
@@ -22,8 +23,7 @@ class Database:
             database=Config.DB_NAME,
             charset='utf8mb4',
             collation='utf8mb4_unicode_ci'
-                                                                                                                      
-        )
+            )
         self.cursor = self.connection.cursor(dictionary=True)
 
     def query(self, query, values=None):
@@ -33,7 +33,7 @@ class Database:
     def execute(self, query, values=None):
         self.cursor.execute(query, values)
         self.connection.commit()
-    
+
     def close(self):
         self.cursor.close()
         self.connection.close()
