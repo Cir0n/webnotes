@@ -1,14 +1,26 @@
 from functools import wraps
+from flask import render_template, session, redirect, url_for
 
-from flask import render_template, session
-
+def require_student(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('role') != 'student':
+            return redirect(url_for('auth_bp.login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 def require_teacher(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        role = session.get("role")
-        if role not in ["teacher", "admin"]:
-            return render_template("errors/unauthorized.html", role=role)
+        if session.get('role') != 'teacher':
+            return redirect(url_for('auth_bp.login'))
         return f(*args, **kwargs)
+    return decorated_function
 
+def require_admin(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('role') != 'admin':
+            return redirect(url_for('auth_bp.login'))
+        return f(*args, **kwargs)
     return decorated_function

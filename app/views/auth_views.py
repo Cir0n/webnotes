@@ -11,6 +11,7 @@ from app.forms.forms_auth import LoginForm
 from app.controllers.auth_controller import AuthController
 
 
+
 class AuthViews:
     def __init__(self):
         self.auth_bp = Blueprint("auth_bp", __name__)
