@@ -14,20 +14,24 @@ from app.forms.forms_add_grade import AddGradeForm
 from app.forms.forms_delete_grade import DeleteGradeForm
 
 
+# Vue pour gérer les fonctionnalités des professeurs
 class TeacherViews:
     def __init__(self):
+        # Initialisation du blueprint et des contrôleurs
         self.teacher_bp = Blueprint("teacher_bp", __name__)
         self.teacher_controller = TeacherController()
         self.student_controller = StudentController()
         self.register_route()
 
     def require_teacher(self):
+        # Vérification des droits d'accès professeur
         if session.get("role") not in ["teacher", "admin"]:
             flash("You must be a teacher to access this page")
             return render_template("errors/unauthorized.html")
         return None
 
     def register_route(self):
+        # Route du tableau de bord professeur
         @self.teacher_bp.route("/dashboard")
         @require_teacher
         def teacher_dashboard():
@@ -37,6 +41,7 @@ class TeacherViews:
                 "teacher/dashboard_teacher.html", classes=classes
             )
 
+        # Route pour gérer les élèves d'une classe
         @self.teacher_bp.route(
             "/class/<int:class_id>", methods=["GET", "POST"]
         )
@@ -96,6 +101,7 @@ class TeacherViews:
                 form=form,
             )
 
+        # Route pour voir les notes d'un élève
         @self.teacher_bp.route("/student/<int:student_id>")
         def student_grades(student_id):
             form = DeleteGradeForm()
@@ -112,6 +118,7 @@ class TeacherViews:
                 student_id=student_id,
             )
 
+        # Route pour supprimer une note
         @self.teacher_bp.route(
             "/delete_grade/<int:student_id>", methods=["POST"]
         )

@@ -1,3 +1,4 @@
+/* Variables de couleurs principales */
 :root {
     --primary-color: #4e54c8;
     --secondary-color: #eaa42c;
@@ -5,16 +6,17 @@
     --danger-color: #c84e4e;
 }
 
+/* Style de base du corps de page */
 body {
     background-color: #f5f5f5;
 }
 
-/* Général */
+/* Classes utilitaires */
 .hidden {
     display: none;
 }
 
-/* Cartes et Conteneurs */
+/* Styles des cartes et conteneurs principaux */
 .subject-card, .homework-card, .schedule-container {
     border: none;
     border-radius: 10px;
@@ -24,11 +26,13 @@ body {
     padding: 20px;
 }
 
+/* Animation au survol des cartes de devoirs */
 .homework-card:hover {
     transform: translateY(-5px);
     transition: transform 0.2s;
 }
 
+/* Style des éléments de notes et blocs de cours */
 .grade-item, .course-block {
     border-left: 4px solid var(--secondary-color);
     margin: 10px;
@@ -38,11 +42,12 @@ body {
     transition: transform 0.2s;
 }
 
+/* Animation au survol des éléments de notes */
 .grade-item:hover {
     transform: translateX(5px);
 }
 
-/* Titres et en-têtes */
+/* En-têtes des sections */
 .grade-header, .homework-header, .day-header {
     background: linear-gradient(45deg, var(--primary-color), #6066d0);
     color: white;
@@ -50,13 +55,14 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
-/* Statuts et Indicateurs */
+/* Indicateurs de statut des devoirs */
 .homework-status {
     padding: 5px 10px;
     border-radius: 15px;
     font-size: 0.8em;
 }
 
+/* États des devoirs */
 .status-pending {
     background-color: var(--secondary-color);
     color: white;
@@ -67,15 +73,18 @@ body {
     color: white;
 }
 
+/* Affichage des échéances */
 .homework-due {
     font-size: 0.9em;
     color: #666;
 }
 
+/* Indicateurs de priorité */
 .priority-high { border-left: 4px solid #dc3545; }
 .priority-medium { border-left: 4px solid #ffc107; }
 .priority-low { border-left: 4px solid #28a745; }
 
+/* Style des moyennes */
 .average-box {
     background-color: var(--accent-color);
     color: white;
@@ -84,6 +93,7 @@ body {
     font-weight: bold;
 }
 
+/* Cercles de notes */
 .grade-circle {
     width: 40px;
     height: 40px;
@@ -95,17 +105,19 @@ body {
     color: white;
 }
 
+/* États des notes */
 .grade-excellent { background-color: #28a745; }
 .grade-good { background-color: #17a2b8; }
 .grade-average { background-color: #ffc107; }
 .grade-poor { background-color: #dc3545; }
 
+/* Barre de progression */
 .progress {
     height: 8px;
     border-radius: 4px;
 }
 
-/* Emails */
+/* Section des emails */
 .email-list {
     border-right: 1px solid #dee2e6;
     height: calc(100vh - 56px);
@@ -138,7 +150,7 @@ body {
     margin: 10px;
 }
 
-/* Emploi du temps */
+/* Styles de l'emploi du temps */
 .table thead {
     background-color: var(--primary-color);
     color: white;
@@ -148,13 +160,14 @@ body {
     background-color: #f8f9fa;
 }
 
+/* Style des matières */
 .subject {
     font-weight: bold;
     padding: 10px;
     border-radius: 5px;
 }
 
-/* Matières spécifiques */
+/* Couleurs spécifiques aux matières */
 .course-block .maths { background-color: #0000FF; color: white; }
 .course-block .anglais { background-color: #00CED1; }
 .course-block .histoire { background-color: #FFFF00; }
@@ -167,7 +180,7 @@ body {
 .course-block .espagnol { background-color: #df2a2a; color: white; }
 .course-block .accompagnement { background-color: rgb(143, 143, 90); color: white; }
 
-/* Navigation */
+/* Boutons de navigation */
 .nav-btn {
     background-color: var(--primary-color);
     color: white;

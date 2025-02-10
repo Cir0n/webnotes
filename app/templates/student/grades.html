@@ -1,6 +1,8 @@
+<!-- Page de visualisation des notes -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- En-tête avec styles et scripts -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notes - Étudiant</title>
@@ -17,9 +19,12 @@
     </script>
 </head>
 <body>
+    <!-- Barre de navigation -->
     {% include 'partials/_navbar.html' %}
 
+    <!-- Conteneur principal -->
     <div class="container-fluid py-4">
+        <!-- Moyenne générale -->
         <div class="row mb-4">
             <div class="col-12">
                 <h2 class="text-primary mb-4">Mes Notes</h2>
@@ -34,6 +39,7 @@
             </div>
         </div>
 
+        <!-- Notes par matière et graphiques -->
         <div class="row">
             <!-- Matières principales -->
             <div class="col-md-6">
@@ -87,7 +93,7 @@
         </div>
     </div>
 
-
+    <!-- Script du graphique -->
     <script>
         // Graphique des notes
         const ctx = document.getElementById('gradesChart').getContext('2d');

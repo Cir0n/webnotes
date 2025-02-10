@@ -20,8 +20,10 @@ from app.forms.forms_edit_student import EditStudentForm
 from app.forms.forms_edit_teacher import EditTeacherForm
 
 
+# Vue pour gérer l'interface administrative
 class AdminViews:
     def __init__(self):
+        # Initialisation des composants
         self.admin_bp = Blueprint("admin_bp", __name__)
         self.student_controller = StudentController()
         self.subject_controller = SubjectController()
@@ -31,16 +33,19 @@ class AdminViews:
         self.register_routes()
 
     def require_admin(self):
+        # Vérification des droits administrateur
         if session.get("role") != "admin":
             flash("You must be an admin to access this page")
             return redirect(url_for("auth_bp.login"))
 
     def register_routes(self):
+        # Dashboard administrateur
         @self.admin_bp.route("/dashboard")
         def admin_dashboard():
             self.require_admin()
             return render_template("admin/dashboard.html")
 
+        # Gestion des étudiants
         @self.admin_bp.route("/students")
         def list_students():
             self.require_admin()
@@ -179,8 +184,7 @@ class AdminViews:
                 print("Validation échouée :", form.errors)
             return redirect(url_for("admin_bp.list_students"))
 
-        # ----------------------------TEACHERS--------------------------------
-
+        # Gestion des professeurs
         @self.admin_bp.route("/teachers")
         def list_teachers():
             self.require_admin()

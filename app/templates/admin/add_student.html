@@ -1,19 +1,24 @@
 {% extends "admin/base.html" %}
 
 {% block content %}
+<!-- En-tête du formulaire -->
 <div class="container mt-4">
     <h2>Ajouter un Étudiant</h2>
 
+    <!-- Message d'erreur si présent -->
     {% if error %}
     <div class="alert alert-danger">
         {{ error }}
     </div>
     {% endif %}
 
+    <!-- Formulaire d'ajout d'étudiant -->
     <form action="{{ url_for('admin_bp.add_student_form') }}" method="POST">
         {{ form.hidden_tag() }}
         <div class="row">
+            <!-- Colonne gauche : Informations de base -->
             <div class="col-md-6">
+                <!-- Champ username -->
                 <div class="mb-3">
                     <label for="username" class="form-label">Username :</label>
                     {{ form.username(class_="form-control") }}
@@ -26,6 +31,7 @@
                     {% endif %}
                 </div>
 
+                <!-- Champ mot de passe -->
                 <div class="mb-3">
                     <label for="password" class="form-label">Mot de passe :</label>
                     {{ form.password(class_="form-control") }}
@@ -38,6 +44,7 @@
                     {% endif %}
                 </div>
 
+                <!-- Champ prénom -->
                 <div class="mb-3">
                     <label for="first_name" class="form-label">Prénom :</label>
                     {{ form.first_name(class_="form-control") }}
@@ -50,6 +57,7 @@
                     {% endif %}
                 </div>
 
+                <!-- Champ nom -->
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Nom :</label>
                     {{ form.last_name(class_="form-control") }}
@@ -63,7 +71,9 @@
                 </div>
             </div>
 
+            <!-- Colonne droite : Classe et options -->
             <div class="col-md-6">
+                <!-- Sélection de la classe -->
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Classe :</label>
                     {% for value, label in form.class_id.choices %}
@@ -81,6 +91,7 @@
                     {% endif %}
                 </div>
 
+                <!-- Sélection des langues -->
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Langues :</label>
                     {% for language in languages %}
@@ -98,6 +109,7 @@
                     {% endif %}
                 </div>
 
+                <!-- Sélection des options -->
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Options :</label>
                     {% for option in options %}
@@ -117,6 +129,7 @@
             </div>
         </div>
 
+        <!-- Boutons de validation -->
         <div class="mt-4 text-center">
             <button type="submit" class="btn btn-primary px-4">Ajouter</button>
             <a href="{{ url_for('admin_bp.list_students') }}" class="btn btn-secondary px-4">Annuler</a>

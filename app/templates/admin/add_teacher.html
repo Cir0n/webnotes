@@ -1,9 +1,11 @@
 {% extends "admin/base.html" %}
 
 {% block content %}
+<!-- Conteneur principal -->
 <div class="container mt-4">
     <h2 class="mb-4">Ajouter un Professeur</h2>
 
+    <!-- Messages flash pour les notifications -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
         {% for category, message in messages %}
@@ -15,39 +17,48 @@
     {% endif %}
 {% endwith %}
 
-        {% if error %}
+    <!-- Message d'erreur si présent -->
+    {% if error %}
     <div class="alert alert-danger">
         {{ error }}
     </div>
     {% endif %}
 
+    <!-- Formulaire d'ajout de professeur -->
     <form action="{{ url_for('admin_bp.add_teacher') }}" method="POST">
         {{ form.hidden_tag() }}
 
         <div class="row">
+            <!-- Colonne gauche : Informations personnelles -->
             <div class="col-md-6">
+                <!-- Champs username -->
                 <div class="mb-3">
                     {{ form.username.label(class="form-label") }}
                     {{ form.username(class="form-control") }}
                 </div>
 
+                <!-- Champ mot de passe -->
                 <div class="mb-3">
                     {{ form.password.label(class="form-label") }}
                     {{ form.password(class="form-control") }}
                 </div>
 
+                <!-- Champ prénom -->
                 <div class="mb-3">
                     {{ form.first_name.label(class="form-label") }}
                     {{ form.first_name(class="form-control") }}
                 </div>
 
+                <!-- Champ nom -->
                 <div class="mb-3">
                     {{ form.last_name.label(class="form-label") }}
                     {{ form.last_name(class="form-control") }}
                 </div>
             </div>
 
+            <!-- Colonne droite : Classes et matières -->
             <div class="col-md-6">
+                <!-- Sélection des classes -->
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Classes :</label>
                     {% for value, label in form.classes.choices %}
@@ -58,6 +69,7 @@
                     {% endfor %}
                 </div>
 
+                <!-- Sélection des matières -->
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Matières :</label>
                     {% for value, label in form.subjects.choices %}
@@ -70,22 +82,27 @@
             </div>
         </div>
 
-        <!-- Boutons -->
+        <!-- Boutons de validation -->
         <div class="mt-4 text-center">
             <button type="submit" class="btn btn-primary px-4">Ajouter le Professeur</button>
             <a href="{{ url_for('admin_bp.list_teachers') }}" class="btn btn-secondary px-4">Annuler</a>
         </div>
     </form>
+
+    <!-- Script de validation -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // Initialisation des variables
             const form = document.querySelector("form");
             const subjectsCheckboxes = document.querySelectorAll("input[name='subjects']");
             const subjectError = document.createElement("div");
     
+            // Configuration du message d'erreur
             subjectError.classList.add("alert", "alert-danger", "mt-2", "d-none");
             subjectError.innerText = "❌ Vous devez sélectionner au moins une matière.";
             form.insertBefore(subjectError, form.firstChild);
     
+            // Validation à la soumission du formulaire
             form.addEventListener("submit", function (event) {
                 let atLeastOneChecked = false;
     
@@ -97,12 +114,11 @@
                 });
     
                 if (!atLeastOneChecked) {
-                    event.preventDefault();  // Bloque temporairement l'envoi
-                    subjectError.classList.remove("d-none");  // Affiche le message d'erreur
+                    event.preventDefault();
+                    subjectError.classList.remove("d-none");
                 }
             });
         });
     </script>
-    
 </div>
 {% endblock %}

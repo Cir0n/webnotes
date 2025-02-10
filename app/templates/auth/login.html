@@ -1,6 +1,8 @@
+<!-- Page de connexion -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- En-tête avec méta-données et liens CSS/JS -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -11,7 +13,9 @@
     </script>
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <!-- Carte de connexion -->
     <div class="card p-4 shadow-lg" style="width: 350px;">
+        <!-- Formulaire de connexion -->
         <h2 class="text-center">Login</h2>
         <form action="/login" method="POST">
             {{ form.hidden_tag() }}

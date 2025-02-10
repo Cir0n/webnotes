@@ -6,14 +6,17 @@ from app.controllers.student_controller import StudentController
 from app.decorators import require_student
 
 
+# Vue pour gérer les fonctionnalités des étudiants
 class StudentViews:
     def __init__(self):
+        # Initialisation du blueprint et des contrôleurs
         self.student_bp = Blueprint("student_bp", __name__)
         self.studentController = StudentController()
         self.classController = ClassController()
         self.register_routes()
 
     def register_routes(self):
+        # Route du tableau de bord étudiant
         @self.student_bp.route("/me")
         def student_dashboard():
             student_id = session.get("user_id")
@@ -42,6 +45,7 @@ class StudentViews:
                 class_=class_student,
             )
 
+        # Routes pour la gestion des étudiants
         @self.student_bp.route("/list")
         def list_students():
             students = self.studentController.list_students()
@@ -57,6 +61,7 @@ class StudentViews:
             )
             return render_template("student/add.html")
 
+        # Routes pour les fonctionnalités étudiantes (mail, présence, devoirs, etc.)
         @self.student_bp.route("/mail")
         @require_student
         def student_mail():

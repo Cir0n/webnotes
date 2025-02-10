@@ -1,9 +1,11 @@
+/* Reset CSS de base */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Style général du corps de la page */
 body {
     font-family: 'Arial', sans-serif;
     background-color: white;
@@ -11,18 +13,20 @@ body {
     padding: 1rem;
 }
 
-#big-text {
+/* Styles des textes */
+#big-text, #big-text-title, #medium-text, #actual-day {
     color: black;
+}
+
+#big-text {
     font-size: 1.5rem !important;
 }
 
 #big-text-title {
-    color: black;
     margin-top: 100px;
 }
 
 #medium-text {
-    color: black;
     text-align: center;
 }
 
@@ -32,10 +36,12 @@ body {
     text-decoration: underline;
 }
 
+/* Style des titres */
 h1 {
     text-align: center;
 }
 
+/* Barre de navigation */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -48,17 +54,16 @@ h1 {
     width: calc(100% - 2rem);
 }
 
+/* Logo de la barre de navigation */
 .navbar-logo {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.navbar-menu {
+/* Menu de navigation */
+.navbar-menu, .navbar-menu a {
     display: flex;
     gap: 1rem;
-}
-
-.navbar-menu a {
     text-decoration: none;
     color: white;
     padding: 0.5rem 1rem;
@@ -70,6 +75,7 @@ h1 {
     border-radius: 5px;
 }
 
+/* Bouton de la barre de navigation */
 .navbar-btn {
     background-color: red;
     border: none;
@@ -84,6 +90,7 @@ h1 {
     background-color: #0056b3;
 }
 
+/* Bouton du menu mobile */
 .menu-toggle {
     display: none;
     cursor: pointer;
@@ -96,6 +103,7 @@ h1 {
     margin: 5px 0;
 }
 
+/* Media queries pour le responsive */
 @media (max-width: 768px) {
     .navbar-menu {
         flex-direction: column;
@@ -114,6 +122,7 @@ h1 {
     }
 }
 
+/* Conteneur principal */
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -123,7 +132,8 @@ h1 {
     color: black;
 }
 
-table {
+/* Styles des tableaux */
+table, th, td {
     margin-top: 10rem;
     font-family: Arial, sans-serif;
     border-collapse: collapse;
@@ -131,13 +141,6 @@ table {
     table-layout: auto;
     border-radius: 1rem; 
     overflow:visible;
-}
-
-tr:hover {
-    background-color:  rgb(196, 188, 188);
-}
-
-th, td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -145,12 +148,17 @@ th, td {
 
 th {
     color: white;
-    text-align: left;
     padding: 8px 12px;
     font-size: 1rem;
     background-color: black;
 }
 
+/* Effet de survol des lignes */
+tr:hover {
+    background-color:  rgb(196, 188, 188);
+}
+
+/* Style de l'emploi du temps */
 .schedule {
     background-color: white;
     color: black;
@@ -164,6 +172,7 @@ th {
     box-sizing: border-box;
 }
 
+/* Section droite de la page */
 .right {
     display: flex;
     flex-direction: column;
@@ -177,12 +186,14 @@ th {
     box-sizing: border-box;
 }
 
+/* Style des colonnes */
 .colonne {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
+/* Style des retards */
 .retard {
     font-weight: bold; 
     padding: 1rem;
@@ -193,6 +204,7 @@ th {
     box-sizing: border-box;
 }
 
+/* Style des mails */
 .mail {
     width: 100%;
     max-width: 100%;
@@ -203,6 +215,7 @@ th {
     border-radius: 1rem;
 }
 
+/* Style des cartes */
 .card {
     background-color: rgb(196, 188, 188);
     padding: 1rem;
@@ -220,16 +233,19 @@ th {
     transform: translateY(-4px);
 }
 
+/* Titres des cours */
 .course-title {
     font-size: 1.25em;
     font-weight: bold;
 }
 
+/* Horaires des cours */
 .course-time {
     color: white;
 }
 
-@media (max-width: 768px) {
+/* Media queries pour le responsive */
+@media (max-width: 768px), (max-width: 700px) {
     .container {
         flex-direction: column;
     }
@@ -237,9 +253,7 @@ th {
     .schedule, .right {
         max-width: 100%;
     }
-}
 
-@media (max-width: 700px) {
     .schedule, .retard, .mail {
         max-width: 100%;
     }

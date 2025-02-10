@@ -11,13 +11,16 @@ from app.controllers.auth_controller import AuthController
 from app.forms.forms_auth import LoginForm
 
 
+# Gestion de l'authentification
 class AuthViews:
     def __init__(self):
+        # Initialisation du blueprint et du contrôleur
         self.auth_bp = Blueprint("auth_bp", __name__)
         self.controller = AuthController()
         self.register_routes()
 
     def register_routes(self):
+        # Route de connexion
         @self.auth_bp.route("/login", methods=["GET", "POST"])
         def login():
             form = LoginForm()
@@ -43,11 +46,13 @@ class AuthViews:
 
             return render_template("auth/login.html", form=form)
 
+        # Route de déconnexion
         @self.auth_bp.route("/logout")
         def logout():
             self.controller.logout()
             return redirect(url_for("auth_bp.login"))
 
+        # Route du profil
         @self.auth_bp.route("/profile")
         def profile():
             if "user_id" in session:

@@ -1,10 +1,14 @@
+<!-- Page d'édition d'un étudiant -->
 {% extends "admin/base.html" %}
 
 {% block content %}
 <div class="container mt-4">
+    <!-- Titre -->
     <h2>Éditer un Étudiant</h2>
 
+    <!-- Formulaire d'édition -->
     <form action="{{ url_for('admin_bp.edit_student', student_id=student.id) }}" method="POST">
+        <!-- Informations personnelles -->
         {{ form.hidden_tag() }}
 
         <div class="row">
@@ -84,6 +88,7 @@
             </div>
         </div>
 
+        <!-- Boutons de validation -->
         <div class="mt-4 text-center">
             <button type="submit" class="btn btn-primary px-4">Mettre à jour</button>
             <a href="{{ url_for('admin_bp.list_students') }}" class="btn btn-secondary px-4">Annuler</a>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- En-tête avec styles et scripts -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emploi du temps - Étudiant</title>
@@ -13,9 +14,13 @@
     </script>
 </head>
 <body>
+    <!-- Barre de navigation -->
     {% include 'partials/_navbar.html' %}
+
+    <!-- Emploi du temps -->
     <div class="container py-4 schedule-container">
         <h2 class="text-center text-primary">Emploi du Temps</h2>
+        <!-- Tableau de l'emploi du temps -->
         <table class="table table-bordered text-center">
             <thead>
                 <tr class="day-header">

@@ -1,9 +1,11 @@
 {% extends "student/base.html" %}
 
 {% block content %}
+<!-- En-tête -->
 <div class="container mt-4">
     <h2 class="text-center">📖 Notes en {{ subject.name }}</h2>
 
+    <!-- Tableau des notes -->
     {% if grades %}
         <div class="table-responsive">
             <table class="table table-striped table-hover mt-4">
@@ -28,9 +30,11 @@
             </table>
         </div>
     {% else %}
+        <!-- Message si pas de notes -->
         <p class="alert alert-warning text-center">⚠️ Aucune note disponible pour cette matière.</p>
     {% endif %}
 
+    <!-- Bouton retour -->
     <div class="text-center mt-4">
         <a href="{{ url_for('student_bp.student_dashboard') }}" class="btn btn-secondary">
             🔙 Retour au Tableau de Bord

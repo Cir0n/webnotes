@@ -1,10 +1,13 @@
+<!-- Dashboard principal de l'étudiant -->
 {% extends "student/base.html" %}
 
 {% block content %}
+<!-- Section principale -->
 <div class="container mt-4">
+    <!-- Titre de la page -->
     <h2 class="text-center">🎓 Mon Tableau de Bord</h2>
 
-    <!-- Affichage des matières -->
+    <!-- Liste des matières -->
     <h4 class="mt-4">📚 Mes Matières</h4>
     <ul class="list-group">
         {% for subject in subjects %}
@@ -17,7 +20,7 @@
         {% endfor %}
     </ul>
 
-    <!-- Affichage des notes -->
+    <!-- Tableau des notes -->
     <h4 class="mt-4">📝 Mes Notes</h4>
     {% if grades %}
         <div class="table-responsive">
@@ -49,7 +52,7 @@
     {% endif %}
 </div>
 
-<!-- Ajout du CSS pour l'effet hover -->
+<!-- Styles spécifiques -->
 <style>
     .subject-item {
         transition: background-color 0.3s ease-in-out;
@@ -60,5 +63,4 @@
         cursor: pointer;
     }
 </style>
-
 {% endblock %}

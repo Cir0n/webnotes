@@ -1,10 +1,13 @@
 from app.config import Database
 
 
+# Modèle pour gérer les données des étudiants
 class StudentModel:
+    # Initialise la connexion à la base de données
     def __init__(self):
         self.db = Database()
 
+    # Récupère un étudiant par son ID
     def get_student_by_id(self, student_id):
         query = """SELECT id, first_name, last_name, class_id FROM students
                     WHERE id = %s"""
@@ -13,6 +16,7 @@ class StudentModel:
         )  # Exécute la requête normalement
         return result[0] if result else None
 
+    # Récupère tous les étudiants avec leurs classes et matières
     def get_all_students(self):
         sql = """
         SELECT s.id, s.first_name, s.last_name, c.name AS class_name,
@@ -25,6 +29,7 @@ class StudentModel:
         """
         return self.db.query(sql)
 
+    # Récupère toutes les informations d'un étudiant spécifique
     def get_all_info_student(self, student_id):
         query = """
         SELECT
@@ -41,6 +46,7 @@ class StudentModel:
         """
         return self.db.query(query, (student_id,))
 
+    # Modifie les informations d'un étudiant existant
     def edit_student(
         self,
         student_id,
@@ -77,6 +83,7 @@ class StudentModel:
         for option in selected_options:
             self.db.execute(query, (student_id, option))
 
+    # Crée un nouvel étudiant avec ses matières
     def create_student(
         self,
         user_id,
@@ -111,6 +118,7 @@ class StudentModel:
 
         return user_id
 
+    # Récupère tous les étudiants d'une classe spécifique
     def get_student_class(self, class_id):
         query = """
         SELECT id, first_name, last_name
@@ -119,10 +127,12 @@ class StudentModel:
         """
         return self.db.query(query, (class_id,))
 
+    # Supprime un étudiant
     def delete_student(self, student_id):
         query = "DELETE FROM users WHERE id = %s"
         self.db.execute(query, (student_id,))
 
+    # Récupère toutes les matières d'un étudiant
     def get_student_subject(self, student_id):
         query = """
         SELECT s.id, s.name, s.type
@@ -132,6 +142,7 @@ class StudentModel:
         """
         return self.db.query(query, (student_id,))
 
+    # Récupère une matière par son ID
     def get_subject_by_id(self, subject_id):
         query = "SELECT id, name, type FROM subjects WHERE id = %s"
         result = self.db.query(query, (subject_id,))

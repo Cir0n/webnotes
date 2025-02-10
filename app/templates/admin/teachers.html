@@ -1,11 +1,15 @@
+<!-- Liste et gestion des professeurs -->
 {% extends "admin/base.html" %}
 
 {% block content %}
 <div class="container mt-4">
+    <!-- En-tête et bouton d'ajout -->
     <h2>Liste des Professeurs</h2>
     <a href="{{ url_for('admin_bp.add_teacher') }}" class="btn btn-success mb-3">Ajouter un Professeur</a>
 
+    <!-- Tableau des professeurs -->
     <table class="table table-striped">
+        <!-- En-tête du tableau -->
         <thead class="table-dark">
             <tr>
                 <th>ID</th>
@@ -15,6 +19,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
+        <!-- Corps du tableau -->
         <tbody>
             {% for teacher in teachers %}
             <tr>

@@ -1,13 +1,17 @@
+<!-- Formulaire d'édition des informations d'un professeur -->
 {% extends "admin/base.html" %}
 
 {% block content %}
 <div class="container mt-4">
     <h2>Editer un Professeur</h2>
 
+    <!-- Formulaire d'édition -->
     <form action="{{ url_for('admin_bp.edit_teacher', teacher_id=teacher.id) }}" method="POST">
         {{ form.hidden_tag() }}
 
+        <!-- Informations personnelles -->
         <div class="row">
+            <!-- Colonne gauche : nom et prénom -->
             <div class="col-md-6">
                 <div class="mb-3">
                     {{ form.first_name.label(class="form-label") }}
@@ -20,6 +24,7 @@
                 </div>
             </div>
 
+            <!-- Colonne droite : classes et matières -->
             <div class="col-md-6">
                 <div class="mb-3 border p-3 rounded">
                     <label class="form-label fw-bold">Classe :</label>
@@ -67,6 +72,7 @@
             </div>
         </div>
 
+        <!-- Boutons de validation -->
         <div class="mt-4 text-center">
             <button type="submit" class="btn btn-primary px-4">Mettre à jour</button>
             <a href="{{ url_for('admin_bp.list_teachers') }}" class="btn btn-secondary px-4">Annuler</a>

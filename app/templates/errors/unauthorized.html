@@ -1,11 +1,14 @@
+<!-- Page d'erreur pour accès non autorisé -->
 {% extends "errors/base.html" %}
 
 {% block title %}Accès Refusé{% endblock %}
 
 {% block content %}
+<!-- Message d'erreur -->
 <h1 class="text-danger">🚨 Hop hop hop !</h1>
 <p class="lead">Vous n'avez rien à faire ici.</p>
 
+<!-- Boutons de redirection selon le rôle -->
 {% if role == "student" %}
     <a href="{{ url_for('student_bp.student_dashboard') }}" class="btn btn-primary mt-3">
         🔙 Retour au Dashboard Étudiant
