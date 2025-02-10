@@ -16,43 +16,42 @@
             <tbody>
                 {% for student in students %}
                     <tr>
-                        <td>{{ student.first_name }} {{ student.last_name }}</td>
+                        <td>{{ student["first_name"] }} {{ student["last_name"] }}</td>
                         <td>
-                            <a href="{{ url_for('teacher_bp.student_grades', student_id=student.id) }}" 
+                            <a href="{{ url_for('teacher_bp.student_grades', student_id=student['id']) }}" 
                                class="btn btn-info btn-sm">
                                 📄 Voir Notes
                             </a>
                         </td>
                         <td>
-                            <form action="{{ url_for('teacher_bp.add_grade') }}" method="POST" class="row g-2">
-                                <input type="hidden" name="student_id" value="{{ student.id }}">
+                            <form action="{{ url_for('teacher_bp.class_students', class_id=class_id) }}" method="POST" class="row g-2">
+                                {{ form.hidden_tag() }}
+                                
+                                <input type="hidden" name="student_id" value="{{ student['id'] }}">
                                 <input type="hidden" name="class_id" value="{{ class_id }}">
 
-                                <!-- Sélection des matières enseignées -->
+                            
+                                <!-- Sélection de la matière -->
                                 <div class="col-md-4">
-                                    <select name="subject_id" class="form-select" required>
-                                        <option value="" disabled selected>Choisir une matière</option>
-                                        {% for subject in subjects %}
-                                            <option value="{{ subject.id }}">{{ subject.name }}</option>
-                                        {% endfor %}
-                                    </select>
+                                    {{ form.subject_id(class="form-select") }}
                                 </div>
-
-                                <!-- Note -->
+                            
+                                <!-- Saisie de la note -->
                                 <div class="col-md-3">
-                                    <input type="number" name="grade" class="form-control" min="0" max="20" step="0.5" placeholder="Note" required>
+                                    {{ form.grade(class="form-control", placeholder="Note") }}
                                 </div>
-
-                                <!-- Commentaire -->
+                            
+                                <!-- Saisie du commentaire -->
                                 <div class="col-md-3">
-                                    <input type="text" name="comment" class="form-control" placeholder="Commentaire">
+                                    {{ form.comment(class="form-control", placeholder="Commentaire") }}
                                 </div>
-
+                            
                                 <!-- Bouton d'ajout -->
                                 <div class="col-md-2">
-                                    <button type="submit" class="btn btn-success">➕ Ajouter</button>
+                                    {{ form.submit(class="btn btn-success") }}
                                 </div>
                             </form>
+                                                  
                         </td>
                     </tr>
                 {% endfor %}

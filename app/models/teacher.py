@@ -52,14 +52,13 @@ class TeacherModel:
     ):
         query = "DELETE FROM teacher_subject WHERE teacher_id = %s"
         self.db.execute(query, (teacher_id,))
+        query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
         for language in selected_languages:
-            query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (teacher_id, language))
         for subject in selected_subjects:
-            query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (teacher_id, subject))
         for option in selected_options:
-            query = "INSERT INTO teacher_subject (teacher_id, subject_id) VALUES (%s, %s)"
+
             self.db.execute(query, (teacher_id, option))
 
     def get_all_teachers(self):
@@ -117,3 +116,5 @@ class TeacherModel:
         WHERE ts.teacher_id = %s
         """
         return self.db.query(query, (teacher_id,))
+
+    

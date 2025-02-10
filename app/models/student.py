@@ -66,16 +66,15 @@ class StudentModel:
         )
         principal_subjects = self.db.query(sql_principal_subject)
 
+        query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+
         for subject in principal_subjects:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (student_id, subject["id"]))
 
         for language in selected_languages:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (student_id, language))
 
         for option in selected_options:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (student_id, option))
 
     def create_student(
@@ -100,12 +99,12 @@ class StudentModel:
                      VALUES (%s, %s)"""
             self.db.execute(query, (user_id, subject["id"]))
 
+        query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
+
         for language in selected_languages:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (user_id, language))
 
         for option in selected_options:
-            query = "INSERT INTO student_subject (student_id, subject_id) VALUES (%s, %s)"
             self.db.execute(query, (user_id, option))
 
         return user_id
@@ -121,3 +120,17 @@ class StudentModel:
     def delete_student(self, student_id):
         query = "DELETE FROM users WHERE id = %s"
         self.db.execute(query, (student_id,))
+
+    def get_student_subject(self, student_id):
+        query = """
+        SELECT s.id, s.name, s.type
+        FROM subjects s
+        JOIN student_subject ss ON s.id = ss.subject_id
+        WHERE ss.student_id = %s
+        """
+        return self.db.query(query, (student_id,))
+    
+    def get_subject_by_id(self, subject_id):
+        query = "SELECT id, name, type FROM subjects WHERE id = %s"
+        result = self.db.query(query, (subject_id,))
+        return result[0] if result else None

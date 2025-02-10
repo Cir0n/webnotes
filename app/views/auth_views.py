@@ -22,7 +22,7 @@ class AuthViews:
 
         @self.auth_bp.route("/login", methods=["GET", "POST"])
         def login():
-            form = LoginForm() 
+            form = LoginForm()
 
             if request.method == "POST" and form.validate_on_submit():
                 username = form.username.data
@@ -30,7 +30,9 @@ class AuthViews:
                 result = self.controller.login(username, password)
 
                 if "error" in result:
-                    return render_template("auth/login.html", form=form, message=result["error"])
+                    return render_template(
+                        "auth/login.html", form=form, message=result["error"]
+                    )
 
                 if result["role"] == "student":
                     return redirect(url_for("student_bp.student_dashboard"))
@@ -41,36 +43,7 @@ class AuthViews:
 
                 return redirect("/profile")
 
-            return render_template("auth/login.html", form=form) 
-        
-
-        @self.auth_bp.route("/register", methods=["GET", "POST"])
-        def register():
-            if request.method == "POST":
-                username = request.form.get("username")
-                password = request.form.get("password")
-                role = request.form.get("role")
-                first_name = request.form.get("first_name")
-                last_name = request.form.get("last_name")
-                additional_info = request.form.get("additional_info")
-
-                result = self.controller.register(
-                    username,
-                    password,
-                    role,
-                    first_name,
-                    last_name,
-                    additional_info,
-                )
-
-                if "error" in result:
-                    return render_template(
-                        "auth/register.html", message=result["error"]
-                    )
-
-                return redirect(url_for("auth_bp.login"))
-
-            return render_template("auth/register.html")
+            return render_template("auth/login.html", form=form)
 
         @self.auth_bp.route("/logout")
         def logout():
