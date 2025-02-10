@@ -32,8 +32,8 @@ pipeline {
         }
         stage('Start OWASP ZAP') {
             steps {
-                echo "Starting OWASP ZAP in daemon mode..."
-                sh "zap.sh -daemon -host $ZAP_HOST -port $ZAP_PORT"
+                echo "Starting OWASP ZAP in Docker..."
+                sh "docker run -d -p 8080:8080 owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080"
                 sleep(time: 10, unit: 'SECONDS') // Attendre que ZAP démarre
             }
         }
